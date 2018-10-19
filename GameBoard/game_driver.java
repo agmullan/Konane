@@ -6,13 +6,17 @@
   * Konane.
   *
  **/
+
+ import java.util.*;
+
 public class game_driver{
 
 /**
-  * this is the main method 
+  * this is the main method
  **/
-public static void main(void){
+public static void main(String[] args){
   //call methods here
+  System.out.println("Hello");
 }//end of main
 
 }//end of game_driver class
