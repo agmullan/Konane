@@ -5,7 +5,8 @@
   * This class contains the methods to set up the artifical interegents.
   *
  **/
-public class Agent{
+public class Agent extends Player{
 
-
+public Agent(){
+}
 }//end of Agent class
