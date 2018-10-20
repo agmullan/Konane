@@ -1,5 +1,4 @@
 import java.util.Date;
-
 import javafx.application.Application;
 import javafx.collections.*;
 import javafx.event.*;
@@ -48,7 +47,7 @@ public class UI extends Application{
   public void start(Stage primaryStage){
     //set up display
 BorderPane pane = new BorderPane();
-HBox Tpane = new HBox (10); // for title
+VBox Tpane = new VBox (10); // for title
 HBox Board_Pane = new HBox(10);
 pane.setPadding(new Insets(10, 10, 10, 10));
 
@@ -57,18 +56,31 @@ pane.setPadding(new Insets(10, 10, 10, 10));
  Text title = new Text("Konane");
  title.setFont(new Font("Times New Roman", 60));
 
+ //set up Radio Buttons
+   RadioButton ply_one = new RadioButton("Player One");
+   RadioButton ply_two = new RadioButton("Player Two");
+   ply_one.setSelected(true);
+
+   //set up ToggleGroup
+   ToggleGroup ply_turn = new ToggleGroup();
+   ply_one.setToggleGroup(ply_turn);
+   ply_two.setToggleGroup(ply_turn);
+
+
+
 //numbers for Scene size
 final double NUM_WIDTH = 1000; //2500
 final double NUM_HEIGHT = 1000; //1000
 
 //set up panes
-Tpane.getChildren().addAll(title);
+Tpane.getChildren().addAll(title, ply_one, ply_two);
 Tpane.setAlignment(Pos.CENTER);
 //Tpane.setStyle("-fx-border-color: blue");
 pane.setStyle("-fx-background-color: teal");
 
 Board_Pane.getChildren().addAll(createBoard());
-Board_Pane.setAlignment(Pos.TOP_CENTER);
+Board_Pane.setAlignment(Pos.CENTER);
+Board_Pane.setPadding(new Insets(20, 10, 10, 10));
 HBox.setHgrow(Board_Pane, Priority.ALWAYS);
 //Board_Pane.setPrefSize(temp);
 //pane.setFill(Color.rgb(0,153,0));
