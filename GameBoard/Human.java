@@ -10,4 +10,9 @@ public class Human extends Player{
 public Human(){
 }
 
+public char[][] takeTurn(){
+  char[][] ch = new char[8][8];
+  return ch;
+}
+
 }//end of Agent class

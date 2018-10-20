@@ -7,6 +7,14 @@
  **/
 public class MoveGenerator{
 
+public MoveGenerator(){
+
+}
+
+public Move[] getMoves(char[][] currentBoardState){
+  //based on the current board state return a move with active piece location,
+
+}
 
 
 }//end of MoveGenerator class
