@@ -14,6 +14,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.paint.*;
 import javafx.scene.Group;
+import javafx.scene.input.MouseEvent;
+import java.util.*;
 
 
 public class UI extends Application{
@@ -24,19 +26,23 @@ public class UI extends Application{
   public static final int HEIGHT = 8;      /*  8 x 8 whcih is a standard board in Konane */
 
   private Group tileGroup = new Group();
+  private Group peiceGroup = new Group();
+  //private ArrayList<Piece> peiceGroup = new ArrayList<Piece>();
 
   private Pane createBoard(){
     Pane root = new Pane();
     root.setPrefSize(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
-    root.getChildren().addAll(tileGroup);
+    root.getChildren().addAll(tileGroup, peiceGroup);
 
     //root.getChildren().addAll(new Text("here"));
 
     for(int x = 0; x < HEIGHT; x++){
       for(int y = 0; y < WIDTH; y++){
         Tile tile = new Tile (( x + y ) % 2 == 0, x, y);
-
+        Piece peice = new Piece (( x + y ) % 2 == 0, x, y);
         tileGroup.getChildren().add(tile);
+        peiceGroup.getChildren().add(peice);
+
       }
     }
 
@@ -67,7 +73,6 @@ pane.setPadding(new Insets(10, 10, 10, 10));
    ply_two.setToggleGroup(ply_turn);
 
 
-
 //numbers for Scene size
 final double NUM_WIDTH = 1000; //2500
 final double NUM_HEIGHT = 1000; //1000
@@ -93,6 +98,8 @@ pane.setCenter(Board_Pane);
 
 //show scene
 Scene scene = new Scene (pane, NUM_WIDTH, NUM_HEIGHT);
+
+
 primaryStage.setTitle("Konane");
 primaryStage.setScene(scene);
 primaryStage.show();
