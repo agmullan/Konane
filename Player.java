@@ -8,12 +8,14 @@
 public class Player{
 
   MoveGenerator moveGenerator;
+  char myColor;
 
   public Player(){
+    //this.myColor = myColor;
   }
 
-  public char[][] takeTurn(){
-    char[][] ch = new char[8][8];
-    return ch;
+  public GameBoard takeTurn(){
+    GameBoard g = new GameBoard();
+    return g;
   }
 }//end of Agent class
