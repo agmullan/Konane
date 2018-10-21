@@ -54,16 +54,17 @@ public class MoveGenerator{
   }//end of first_turn
 
   public ArrayList<Tuple> get_jump(char c, GameBoard currentBoardState, Tuple t){
+    //System.out.println("in function");
       int y = t.y;
       int x = t.x;
 
       ArrayList<Tuple> possible_moves = new ArrayList<Tuple>();
       ArrayList<Tuple> legal_jumps = new ArrayList<Tuple>();
 
-      Tuple pos_one = new Tuple(t.x, t.y-1); //up
-      Tuple pos_two = new Tuple(t.x-1, t.y); //left
-      Tuple pos_three = new Tuple(t.x, t.y+1); //down
-      Tuple pos_four = new Tuple(t.x+1, t.y); //right
+      Tuple pos_one = new Tuple(t.x, t.y-2); //up
+      Tuple pos_two = new Tuple(t.x-2, t.y); //left
+      Tuple pos_three = new Tuple(t.x, t.y+2); //down
+      Tuple pos_four = new Tuple(t.x+2, t.y); //right
 
       possible_moves.add(pos_one);
       possible_moves.add(pos_two);
@@ -71,50 +72,35 @@ public class MoveGenerator{
       possible_moves.add(pos_four);
 
       for(Tuple tuple : possible_moves){
-        if(legal(tuple)){
-          if(check_isEmpty(tuple, currentBoardState)){
-            continue; /*this means it was a legal tile but there is nothing on the block to jump */
-          }//end if(check_isEmpty(t, currentBoardState))
-          else{
-            if(!check_color(tuple, c, currentBoardState)){
-              continue; /* this means it was the same color*/
-            }//end if(check_color(t, c, currentBoardState)){
-            else{
-              if(check_landing(tuple, currentBoardState) == true){
-                legal_jumps.add(tuple);
-              }//end if
-            }//end else
+        if(legal(tuple) == true){
+          //System.out.println("legal");
 
-          }//end else
+          if(check_isEmpty(t, currentBoardState) == false){
+          //  System.out.println("not empty");
+
+            if(check_color(t, c, currentBoardState) == true){
+                //System.out.println("different color");
+
+                if(check_landing(tuple, currentBoardState) == true){
+                    //System.out.println("landing");
+                  legal_jumps.add(tuple);
+                }//end of if(check_landing(tuple, currentBoardState) == true
+
+            }//end of if(check_color(tuple, c, currentBoardState) == true)
+
+          }//end if(check_isEmpty(t, currentBoardState) == false)
 
         }//end if(legal(t))
+
       }//end of for
 
       return legal_jumps;
   }//end of get_jump()
 
   public boolean check_landing(Tuple t, GameBoard gb){
-
-    ArrayList<Tuple> possible_moves = new ArrayList<Tuple>();
-
-    Tuple pos_one = new Tuple(t.x, t.y-2); //up
-    Tuple pos_two = new Tuple(t.x-2, t.y); //left
-    Tuple pos_three = new Tuple(t.x, t.y+2); //down
-    Tuple pos_four = new Tuple(t.x+2, t.y); //right
-
-    possible_moves.add(pos_one);
-    possible_moves.add(pos_two);
-    possible_moves.add(pos_three);
-    possible_moves.add(pos_four);
-
-    for(Tuple tuple : possible_moves){
-      if((legal(tuple) == true) && (check_isEmpty(tuple, gb) == true)){
-        return true;
-      }
-      else{
-        return false;
-      }
-    }//end of for
+    if(gb.get_game_state(t.y, t.x) == 'e'){
+      return true;
+    }//end of if(currentBoardState.get_game_state(tuple.y, tuple.x) == 'e')
 
     return false;
   }//end of check_landing
@@ -140,12 +126,26 @@ public boolean legal(Tuple t){
  * it returns false. If the tile is occupied it will return true.
 */
   public boolean check_isEmpty(Tuple t, GameBoard currentBoardState ){
-        if(currentBoardState.get_game_state(t.y, t.x) == 'e'){
-          return true;
-        }
-        else{
+        Tuple pos_one = new Tuple(t.x, t.y-1); //up
+        Tuple pos_two = new Tuple(t.x-1, t.y); //left
+        Tuple pos_three = new Tuple(t.x, t.y+1); //down
+        Tuple pos_four = new Tuple(t.x+1, t.y); //right
+
+        ArrayList<Tuple> possible_moves = new ArrayList<Tuple>();
+
+        possible_moves.add(pos_one);
+        possible_moves.add(pos_two);
+        possible_moves.add(pos_three);
+        possible_moves.add(pos_four);
+
+        for(Tuple tuple : possible_moves){
+          if(legal(tuple) == true){
+            if(currentBoardState.get_game_state(tuple.y, tuple.x) == 'e'){
+              return true;
+            }//end of if(currentBoardState.get_game_state(tuple.y, tuple.x) == 'e')
+          }//end of if(legal(tuple) == true)
+        }//end of for
           return false;
-        }
   }//end of check_isEmpty
 
   /*
@@ -156,13 +156,26 @@ public boolean legal(Tuple t){
   */
   public boolean check_color(Tuple t , char c, GameBoard currentBoardState){
 
-    if(currentBoardState.get_game_state(t.y, t.x) == c){
-      return false;
-    }
-    else{
-      return true;
-    }
+    Tuple pos_one = new Tuple(t.x, t.y-1); //up
+    Tuple pos_two = new Tuple(t.x-1, t.y); //left
+    Tuple pos_three = new Tuple(t.x, t.y+1); //down
+    Tuple pos_four = new Tuple(t.x+1, t.y); //right
 
+    ArrayList<Tuple> possible_moves = new ArrayList<Tuple>();
+
+    possible_moves.add(pos_one);
+    possible_moves.add(pos_two);
+    possible_moves.add(pos_three);
+    possible_moves.add(pos_four);
+
+    for(Tuple tuple : possible_moves){
+      if(legal(tuple) == true){
+        if(currentBoardState.get_game_state(tuple.y, tuple.x) == c){
+          return false;
+        }//end of if(currentBoardState.get_game_state(tuple.y, tuple.x) == c)
+      }//end of if(legal(tuple) == true)
+    }//end of for
+      return true;
   }
 
   public Move[] getMoves(GameBoard currentBoardState){
