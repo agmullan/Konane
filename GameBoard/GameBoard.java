@@ -4,8 +4,7 @@ public class GameBoard{
   protected char[][] gameState = new char[8][8];
   boolean initialState;
   protected final int SIZE = 8;
-  protected Tuple black_first_move = new Tuple(-1,-1);
-  protected Tuple white_first_move = new Tuple(-1,-1);
+
 
   //Move lastMove;
 
@@ -45,22 +44,6 @@ public void printGameBoard(){
 public char get_game_state(int x, int y){
   return gameState[x][y];
 }
-
-public Tuple get_black_first_move(){
-  return black_first_move;
-}//end of get_black_first_move
-
-public void set_black_first_move(Tuple t){
-  black_first_move = t;
-}//end of get_black_first_move
-
-public Tuple get_white_first_move(){
-  return white_first_move;
-}//end of get_white_first_move
-
-public void set_white_first_move(Tuple t){
-  white_first_move = t;
-}//end of get_white_first_move
 
 public int get_Size(){
   return SIZE;
