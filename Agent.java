@@ -28,17 +28,18 @@ public class Agent extends Player{
   }
 
   public GameBoard generateBoard(Move currentMove, GameBoard currentBoardState){
-    GameBoard gameState = currentBoardState;
+    GameBoard board = currentBoardState;
 
     if(currentMove.removeList.size() > 0){
       for(int i = 0; i<currentMove.removeList.size(); i++){
         Tuple t = currentMove.removeList.get(i);
-        gameState.replace(t.x,t.y,'e');
+        board.replace(t.x,t.y,'e');
       }
-      gameState.replace(currentMove.currentLocation.x,currentMove.currentLocation.y, 'e');
-
-      gameState.replace(currentMove.futureLocation.x,currentMove.futureLocation.y, myColor);
+      if(currentMove.currentLocation.x != -1)
+        board.replace(currentMove.currentLocation.x,currentMove.currentLocation.y, 'e');
+      if(currentMove.futureLocation.x != -1)
+        board.replace(currentMove.futureLocation.x,currentMove.futureLocation.y, myColor);
     }
-    return gameState;
+    return board;
   }
 }//end of Agent class

@@ -9,6 +9,7 @@ public class GameBoard{
   public GameBoard(){
     initialState = true;
     newGameBoard();
+    printGameBoard();
   }
 
 
@@ -36,6 +37,7 @@ public void printGameBoard(){
     }
     System.out.print("\n");
   }
+  System.out.print("----------------\n");
 }
 
 }
