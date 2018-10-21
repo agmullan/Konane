@@ -80,15 +80,15 @@ public class MoveGenerator{
               continue; /* this means it was the same color*/
             }//end if(check_color(t, c, currentBoardState)){
             else{
-              if(check_landing(tuple, currentBoardState)){
-
-              }
+              if(check_landing(tuple, currentBoardState) == true){
+                legal_jumps.add(tuple);
+              }//end if
             }//end else
 
           }//end else
 
         }//end if(legal(t))
-      }
+      }//end of for
 
       return legal_jumps;
   }//end of get_jump()
