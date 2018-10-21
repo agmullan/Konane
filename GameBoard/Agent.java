@@ -9,15 +9,17 @@ public class Agent extends Player{
 
   MoveGenerator moveGenerator;
   Strategy strategy;
+  char myColor;
 
-  public Agent(){
+  public Agent(char myColor){
     moveGenerator = new MoveGenerator();
+    this.myColor= myColor;
   }
 
-  public char[][] takeTurn(char[][] currentBoardState){
+  public GameBoard takeTurn(GameBoard currentBoardState){
     Move[] availableMoves = moveGenerator.getMoves(currentBoardState);
     Move nextMove = chooseMove(availableMoves);
-    return generateBoard(nextMove);
+    return generateBoard(nextMove, currentBoardState);
   }
 
   public Move chooseMove(Move[] availableMoves){
@@ -25,8 +27,18 @@ public class Agent extends Player{
     return availableMoves[0];
   }
 
-  public char[][] generateBoard(Move move){
-    char[][] gameState = new char[8][8];
+  public GameBoard generateBoard(Move currentMove, GameBoard currentBoardState){
+    GameBoard gameState = currentBoardState;
+
+    if(currentMove.removeList.size() > 0){
+      for(int i = 0; i<currentMove.removeList.size(); i++){
+        Tuple t = currentMove.removeList.get(i);
+        gameState.replace(t.x,t.y,'e');
+      }
+      gameState.replace(currentMove.currentLocation.x,currentMove.currentLocation.y, 'e');
+
+      gameState.replace(currentMove.futureLocation.x,currentMove.futureLocation.y, myColor);
+    }
     return gameState;
   }
 }//end of Agent class

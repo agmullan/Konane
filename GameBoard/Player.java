@@ -1,18 +1,22 @@
+
 /**
-  * @author: Francine Dennehy
-  * @author: Alexandra Mullan
-  * @version: 1.0
-  * This class contains the methods to set up the artifical interegents.
-  *
- **/
-public class Human extends Player{
+* @author: Francine Dennehy
+* @author: Alexandra Mullan
+* @version: 1.0
+* This class contains the methods to set up the artifical interegents.
+*
+**/
+public class Player{
 
-public Human(){
-}
+  MoveGenerator moveGenerator;
+  char myColor;
 
-public char[][] takeTurn(){
-  char[][] ch = new char[8][8];
-  return ch;
-}
+  public Player(){
+    //this.myColor = myColor;
+  }
 
+  public GameBoard takeTurn(){
+    GameBoard g = new GameBoard();
+    return g;
+  }
 }//end of Agent class

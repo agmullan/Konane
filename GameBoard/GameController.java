@@ -9,61 +9,49 @@
 **/
 import java.util.Scanner;
 
-public class GameBoard{
+
+public class GameController{
 
   //instance variables
-  char[][] gameBoard = new char[8][8];
+  //char[][] gameBoard = new char[8][8];
+  GameBoard gameBoard;
   boolean gameWon;
   Player white, black;
 
+
+
+
   //constructor
-  public GameBoard(){
-    newGameBoard();
+  public GameController(){
+
     chooseYourColor();
     runGame();
 
-  }
+  }//end of constructor
 
   public void runGame(){
+    // gameBoard = black.takeFirstTurn();
+    // gameBoard = white.takeFirstTurn();
     while(!gameWon){
 
       gameBoard = black.takeTurn();
 
-      printGameBoard();
+      gameBoard.printGameBoard();
 
       gameBoard = white.takeTurn();
 
-      printGameBoard();
+      gameBoard.printGameBoard();
 
       gameWon = checkForWin();
-    }
-  }
+    }// end of while
+  }//end of runGame
 
   public boolean checkForWin(){
     return true;
-  }
+  }// end of checkForWin
 
-  public void newGameBoard(){
-    for(int i = 0; i < 8; i ++){
-      for(int j = 0; j < 8; j ++){
-        if((i+j) % 2 == 0){
-          gameBoard[i][j] = 'b';
-        }else{
-          gameBoard[i][j] = 'w';
-        }
-      }
-    }
-  }
 
-  public void printGameBoard(){
-    for(int i = 0; i < 8; i ++){
-      for(int j = 0; j < 8; j ++){
-        System.out.print(gameBoard[i][j]);
-        System.out.print(" ");
-      }
-      System.out.print("\n");
-    }
-  }
+
 
   public void chooseYourColor(){
     String ans = "";
@@ -88,12 +76,12 @@ public class GameBoard{
     scan.close();
 
     if(ans.equals("b")){
-      black = new Human();
-      white = new Agent();
+      black = new Human('b');
+      white = new Agent('w');
     }
     else if(ans.equals("w")){
-      white = new Human();
-      black = new Agent();
+      white = new Human('w');
+      black = new Agent('b');
     }
   }
 
