@@ -97,6 +97,10 @@ public class MoveGenerator{
       return legal_jumps;
   }//end of get_jump()
 
+/*
+ * @version 1.0
+ * This method makes sure that the spot where the piece would land after jumping is empty
+ */
   public boolean check_landing(Tuple t, GameBoard gb){
     if(gb.get_game_state(t.y, t.x) == 'e'){
       return true;
