@@ -134,7 +134,6 @@ public class GameController{
       white = new Agent('w', true);
     }
     else if(ans.equals("w")){
-      System.out.println("HERE");
       white = new Human('w', false);
       black = new Agent('b', true);
       System.out.println(black.isCPU());

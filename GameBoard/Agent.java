@@ -106,12 +106,11 @@ public class Agent extends Player{
 
 /**
   * @version: 1.0
-  * 
+  *
   *
   *
   *
  **/
-
   public Move playerChooseMove(ArrayList<Move> availableMoves, int i){
     if(availableMoves.size() > 0){
       return availableMoves.get(i);
