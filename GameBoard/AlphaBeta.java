@@ -39,14 +39,40 @@ public class AlphaBeta{
  * e - 2 < v < e + 2 Pruning
  */
 
+ //Declarations
+ protected boolean advanced = false;
+
+/**
+  * This is the Constructor for AlphaBeta. This is where you declare which search the
+  * the agent is imploying. The string passed in should reg or adv to denote which
+  *
+ **/
+ public AlphaBeta(String type){
+   set_advanced(type);
+ }//end of Constructor
+
+/**
+  * @version 1.0
+  * @return void
+  * This method sets the value of the boolean advanced.
+ **/
+public void set_advanced(String type){
+  if(type.equalsIgnoreCase("adv")){
+    advanced = true;
+  }
+  else{
+    advanced = false;
+  }
+}// end of set_advanced(String type)
 
 /**
  * @version: 1.0
+ * @return Move
  * This function is called to perform Alphaq Beta Pruning
 **/
 public /*Move*/ void  Alpha_Beta_Search(GameBoard gb/* add */){
   //this method is most likely going to change
-  
+
   int neg_infinity = Integer.MIN_VALUE;
   int pos_infinity = Integer.MAX_VALUE;
 
@@ -57,16 +83,33 @@ public /*Move*/ void  Alpha_Beta_Search(GameBoard gb/* add */){
 }//end of Alpha_Beta_Search
 
 /**
- * @version 1
+ * @version 1.1
+ * @return int v
  * This finds the max value for the utility state.
 **/
-public int Max_Value(GameBoard gb, /* Moves ,*/ int alpha, int beta){
+public int Max_Value(GameBoard gb, /* Moves ,*/ int alpha, int beta, int utility){
   int v = Integer.MIN_VALUE;
+
+  if(advanced == true){
+
+    if((util - 2) >= beta){
+      return (util - 2 );
+    }//end if
+
+  }
 
   /* for */
   /* this loop would based on the list of states that could be possible */
   int temp = 0; //this needs to change
-  v = Math.max(v, MIN(temp ,alpha, beta));
+
+
+  if(advanced == true){
+      v = Math.max(v, MIN(child , Math.max(alpha, (util - 2)), Math.min(beta, (util + 2))));
+  }
+  else{
+    v = Math.max(v, MIN(temp ,alpha, beta));
+  }
+
   if(v >= beta){
     return v;
   }
@@ -77,7 +120,8 @@ public int Max_Value(GameBoard gb, /* Moves ,*/ int alpha, int beta){
 }//end of Max_Value()
 
 /**
- * @version 1
+ * @version 1.0
+ * @return int result
  * This is a helper function that is used in Min_Value when it needs to return
  * the max value of three different numbers.
 **/
@@ -88,16 +132,32 @@ public int MAX(int a, int b, int c){
 } //end of MAX
 
 /**
- * @version 1
+ * @version 1.1
+ * @return int v
  * This finds the min value for the utility state.
 **/
-public int Min_Value(GameBoard gb, /* Moves ,*/ int alpha, int beta){
+public int Min_Value(GameBoard gb, /* Moves ,*/ int alpha, int beta, int utility){
   int v = Integer.MAX_VALUE;
+
+  if(advanced == true){
+
+    if((util + 2) <= alpha){
+      return (util + 2 );
+    }//end if
+
+  }
 
   /* for */
   /* this loop would based on the list of states that could be possible */
   int temp = 0; //this needs to change
-  v = Math.min(v, MAX(temp ,alpha, beta));
+
+  if(advanced == true){
+      v = Math.min(v, MAX(child , Math.max(alpha, (util - 2)), Math.min(beta, (util + 2))));
+  }
+  else{
+      v = Math.min(v, MAX(temp ,alpha, beta));
+  }
+
   if(v <= alpha){
     return v;
   }
@@ -107,7 +167,8 @@ public int Min_Value(GameBoard gb, /* Moves ,*/ int alpha, int beta){
 }//end of Min_Value()
 
 /**
- * @version 1
+ * @version 1.0
+ * @return int result
  * This is a helper function that is used in Max_Value when it needs to return
  * the min value of three different numbers.
 **/

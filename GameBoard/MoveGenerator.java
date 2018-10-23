@@ -5,12 +5,12 @@
   * This class contains the methods to generate the legal moves on Konane.
   *
  **/
-
 import java.util.*;
 
 public class MoveGenerator{
 
   private char myColor;
+
 
   public MoveGenerator(char myColor){
       this.myColor = myColor;
@@ -130,7 +130,6 @@ public class MoveGenerator{
                 if(t.get(x).get(i).isLeaf() == true)
                     leaves.add(t.get(x).get(i));
             }
-
             //backtrack up all the leaf nodes to get complete moves
             for(int i = 0; i< leaves.size(); i++){
 
@@ -149,7 +148,7 @@ public class MoveGenerator{
         }
 
         return alm;
-    }
+    }//end of sequencesToMoves(ArrayList<Tree> t)
 
     public void createRemoveList(Move m, Node n){
 
@@ -169,7 +168,7 @@ public class MoveGenerator{
         m.addRemoval(rmvX, rmvY);
 
         createRemoveList(m, n.parent());
-    }
+    }//end of createRemoveList(Move m, Node n)
 
     public void buildMoveTree(Tree t, char[][] state, Node parent){
 
@@ -197,7 +196,7 @@ public class MoveGenerator{
                 buildMoveTree(t, newState, n);
             }
         }
-    }
+    }//end of buildMoveTree(Tree t, char[][] state, Node parent)
 
     public boolean nodeNotInPath(Node n, Node next){
         //System.out.print("\n" + next + " compare to ");
@@ -211,7 +210,7 @@ public class MoveGenerator{
 
         nodeNotInPath(n, next.parent());
         return false;
-    }
+    }//end of nodeNotInPath(Node n, Node next)
 
     public char[][] tempBoard(char[][] oldState, Tuple to, Tuple from){
         char[][] newState = new char[8][8];
@@ -224,7 +223,7 @@ public class MoveGenerator{
         newState[to.x()][to.y()] = myColor;
         //get rid of the middle piece
         return newState;
-    }
+    }//end of tempBoard(char[][] oldState, Tuple to, Tuple from)
 
     public ArrayList<Tuple> getJumps(char[][] state, Tuple t, Tuple previous){
         int x = t.x();
@@ -254,7 +253,7 @@ public class MoveGenerator{
         }
 
         return jumps;
-    }
+    }//end of getJumps(char[][] state, Tuple t, Tuple previous)
 
     public ArrayList<Tuple> getMoveablePieces(char[][] state){
         ArrayList<Tuple> moveablePieces = new ArrayList<Tuple>();
@@ -269,7 +268,7 @@ public class MoveGenerator{
             }
         }
         return moveablePieces;
-    }
+    }//end of getMoveablePieces(char[][] state)
 
     public boolean moveable(int x, int y, char[][] state){
         if(x+2 < 8 && state[x+2][y] == 'e' && state[x+1][y] != 'e'){
@@ -285,7 +284,7 @@ public class MoveGenerator{
             return true;
         }
         return false;
-    }
+    }//end of moveable(int x, int y, char[][] state)
 
      //based on the current board state return a move with active piece location,
 

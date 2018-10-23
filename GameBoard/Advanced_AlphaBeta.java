@@ -42,6 +42,9 @@ public class Advanced_AlphaBeta{
  */
 
 
+
+
+
 /**
  * @version: 1.0
  * This function is called to perform Alphaq Beta Pruning
@@ -120,6 +123,7 @@ public int Min_Value(GameBoard gb, /* Moves ,*/ int alpha, int beta, int util){
 
 /**
  * @version 1
+ * @return int result
  * This is a helper function that is used in Max_Value when it needs to return
  * the min value of three different numbers.
 **/
@@ -128,5 +132,8 @@ public int MIN(int a, int b, int c){
   int result = Math.min(temp, c);
   return result;
 }//end of MIN
+
+
+
 
 }//end of AlphaBeta class
