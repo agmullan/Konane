@@ -1,7 +1,7 @@
 /**
  * @author: Francine Dennehy
  * @author: Alexandra Mullan
- * @version: 1.0
+ * @version 1.0
  * This class contains the methods to set up the Human Agent. This class is similar to
  * that of Agent expect the inputs from this class should be provided for by the human player.
  **/
@@ -17,7 +17,7 @@ public class Human extends Player{
     private boolean isCPU;
 
 /**
-  * @version: 1.5
+  * @version 1.5
   * This is the constructor for the Human class. It takes in a char denoting its color and a
   * boolean saying if it is the CPU or not.
  **/
@@ -28,7 +28,8 @@ public class Human extends Player{
   }// end of  Human(char myColor, boolean isCPU)
 
 /**
-  * @version: 1.0
+  * @version 1.0
+  * @return boolean isCPU
   * This is a getter method that returns the value of isCPU
  **/
   public boolean isCPU(){
@@ -36,7 +37,8 @@ public class Human extends Player{
   }//end of isCPU()
 
 /**
-  * @version: 1.0
+  * @version 1.0
+  * @return char myColor
   * This is a getter method that returns the char denoting the agent's color
  **/
   public char myColor(){
@@ -44,7 +46,8 @@ public class Human extends Player{
   }//end myColor()
 
 /**
-  * @version: 1.0
+  * @version 1.0
+  * @return ArrayList<Move> availableMoves
   * This method is called to have the Human take the first turn.
   * It returns an ArrayList<Move> of all the available moves at the start of the game.
   * It calls a method found within the MoveGenerator class to find the available moves
@@ -56,7 +59,8 @@ public class Human extends Player{
   }// end if takeFirstTurn(GameBoard currentBoardState)
 
 /**
-  * @version: 1.0
+  * @version 1.0
+  * @return ArrayList<Move> availableMoves
   * This method is called to have the human take its first turn which relays on
   * a different method found within the MoveGenerator class. This like the above method
   * returns an ArrayList<Move> of all the available moves the agent has at that time.
@@ -68,7 +72,8 @@ public class Human extends Player{
   }//end of takeTurn(GameBoard currentBoardState)
 
 /**
-  * @version: 1.0
+  * @version 1.0
+  * @return Move m
   * This method is used to select a move from the generated list of moves available to the
   * agent. The method first checks to see if the availableMoves ArrayList is less
   * then zero. In this case it just returns the first move generated. If the ArrayList
@@ -84,8 +89,8 @@ public class Human extends Player{
   }//end of chooseMove(ArrayList<Move> availableMoves)
 
 /**
-  * @version: 1.0
-  *
+  * @version 1.0
+  * @return Move m
   *
   *
   *

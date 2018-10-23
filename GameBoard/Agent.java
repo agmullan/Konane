@@ -28,7 +28,8 @@ public class Agent extends Player{
   }//end of Agent(char myColor, boolean isCPU)
 
 /**
-  * @version: 1.0
+  * @version 1.0
+  * @return boolean isCPU
   * This is a getter method that returns the value of isCPU
  **/
   public boolean isCPU(){
@@ -36,7 +37,8 @@ public class Agent extends Player{
   }//end of isCPU
 
 /**
-  * @version: 1.0
+  * @version 1.0
+  * @return char myColor
   * This is a getter method that returns the char denoting the agent's color
  **/
   public char myColor(){
@@ -44,7 +46,8 @@ public class Agent extends Player{
   }//end of myColor
 
 /**
-  * @version: 1.0
+  * @version 1.0
+  * @return ArrayList<Move> availableMoves
   * This method is called to have the agent take the first turn.
   * It returns an ArrayList<Move> of all the available moves at the start of the game.
   * It calls a method found within the MoveGenerator class to find the available moves
@@ -56,7 +59,8 @@ public class Agent extends Player{
   }//end of takeFirstTurn(GameBoard currentBoardState)
 
 /**
-  * @version: 1.0
+  * @version 1.0
+  * @return Move chooseMove(availableMoves)
   * This method is called to have the agent take its first turn which relays on
   * a different method found within the MoveGenerator class. This like the above method
   * returns an ArrayList<Move> of all the available moves the agent has at that time.
@@ -74,21 +78,21 @@ public class Agent extends Player{
   }//end of takeTurn1(GameBoard currentBoardState)
 
 /**
-  * @version: 1.0
+  * @version 1.0
+  * @return ArrayList<Move> availableMoves
   * This method is called to have the agent take its turn. This is similar to the takeTurn1()
   * medthod above. However, this is used in the subsequent turns of the game until the game
   * concludes.
   *
  **/
   public ArrayList<Move> takeTurn(GameBoard currentBoardState){
-
     ArrayList<Move> availableMoves = moveGenerator.getMoves(currentBoardState.gameState());
-    //Move nextMove = ;
     return availableMoves;
   }//end of takeTurn(GameBoard currentBoardState)
 
 /**
-  * @version: 1.0
+  * @version 1.0
+  * @return Move m
   * This method is used to select a move from the generated list of moves available to the
   * agent. The method first checks to see if the availableMoves ArrayList is less
   * then zero. In this case it just returns the first move generated. If the ArrayList
@@ -105,8 +109,8 @@ public class Agent extends Player{
   }//end chooseMove(ArrayList<Move> availableMoves)
 
 /**
-  * @version: 1.0
-  *
+  * @version 1.0
+  * @return Move m
   *
   *
   *

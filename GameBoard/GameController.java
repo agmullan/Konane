@@ -12,22 +12,32 @@ import java.util.*;
 
 public class GameController{
 
-  //instance variables
+//Declarations
   private GameBoard gameBoard;
   private boolean gameWon;
   private Player white, black;
   private int round = 2;
   static Scanner scan;
 
-  //constructor
+/**
+  * @version 1.0
+  * This is the Constructor of the GameController class. It is solely
+  * responsible for calling all the methods need to start and run a game to finish.
+ **/
   public GameController(){
     gameBoard = new GameBoard();
     gameWon = false;
     chooseYourColor();
     runGame();
-  }
+  }//end of constructor
 
-
+/**
+  * @version 1.0
+  * @return void 
+  * This is the method that controls the first turn of the game. It generates a list of moves
+  * based on whether the player is an agent or human and what color is assigned to each player.
+  *
+ **/
   public void firstTurn(Player p){
     ArrayList<Move> moves;
     Move m;
@@ -40,8 +50,17 @@ public class GameController{
     }
     gameBoard.update(m, p.myColor());
     gameBoard.printGameBoard();
-  }
+  }//end of firstTurn(Player p)
 
+/**
+  * @version 1.0
+  * @return void
+  * This method is responsible for handling turns in the game.
+  * It determines if the player is an agent or human and then imploys the corresponding
+  * methods found within Agent and Human for the player to move. This method then checks to see
+  * if the game is won or not and updats the gameboard to represent the new state.
+  *
+ **/
   public void turn(Player p){
     ArrayList<Move> moves;
     Move m;
@@ -57,8 +76,15 @@ public class GameController{
 
     gameBoard.update(m, p.myColor());
     gameBoard.printGameBoard();
-  }
+  }//end turn(Player p)
 
+/**
+  * @version 1.0
+  * @return void
+  * This is the runGame method which is responsible for the game loop.
+  * The loop is dependent on the gameWon boolean that is initially set to
+  * false but updates to true when there is a winner.
+ **/
   public void runGame(){
 
     ArrayList<Move> moves;
@@ -84,8 +110,14 @@ public class GameController{
 
       round++;
     }
-  }
+  }//end of runGame()
 
+/**
+  * @version 1.0
+  * @return int i
+  * This is used to get the move from the human player.
+  *
+ **/
   public int selectMove(ArrayList<Move> alm, char myColor){
     System.out.println(myColor + "'s moves:");
     for(int i = 0; i < alm.size(); i++){
@@ -96,8 +128,14 @@ public class GameController{
     int i = scan.nextInt()-1;
     //scan.close();
     return i;
-  }
+  }//end  selectMove(ArrayList<Move> alm, char myColor)
 
+/**
+  * @version 1.0
+  * @return boolean
+  * This method checks for the winner of the game and prints out the results.
+  *
+ **/
   public boolean checkForWin(Move m, String loser, String winner){
     if(m.noMove() == true){
       scan.close();
@@ -105,8 +143,15 @@ public class GameController{
       System.exit(0);
     }
     return false;
-  }
+  }// end of checkForWin(Move m, String loser, String winner)
 
+/**
+  * @version 1.0
+  * @return void
+  * This method is used to assign color to the human and agent. The human player
+  * subsequently chooses what color they want to be and then the agent is assigned the
+  * opposite color but default
+ **/
   public void chooseYourColor(){
     String ans = "";
     boolean validInput = false;
@@ -138,6 +183,6 @@ public class GameController{
       black = new Agent('b', true);
       System.out.println(black.isCPU());
     }
-  }
+  }//end of chooseYourColor()
 
-}//end of GameBoard class
+}//end of GameController class
