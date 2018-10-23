@@ -1,0 +1,18 @@
+#BlueJ class context
+comment0.params=myColor\ isCPU
+comment0.target=Agent(char,\ boolean)
+comment1.params=
+comment1.target=boolean\ isCPU()
+comment2.params=
+comment2.target=char\ myColor()
+comment3.params=currentBoardState
+comment3.target=java.util.ArrayList\ takeFirstTurn(GameBoard)
+comment4.params=currentBoardState
+comment4.target=Move\ takeTurn1(GameBoard)
+comment5.params=currentBoardState
+comment5.target=java.util.ArrayList\ takeTurn(GameBoard)
+comment6.params=availableMoves
+comment6.target=Move\ chooseMove(java.util.ArrayList)
+comment7.params=availableMoves\ i
+comment7.target=Move\ playerChooseMove(java.util.ArrayList,\ int)
+numComments=8
