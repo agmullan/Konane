@@ -13,7 +13,7 @@
   *    v <- -infin
   *    if(e - 2 >= beta ) return e - 2
   *    for each a in Actions(state) do
-  *      v <- Max(v, Min-Value(child, Max(alpha, e -2) , Min(beta, e + 2)))
+  *      v <- Max(v, Min-Value(child, Max(alpha, e - 2) , Min(beta, e + 2)))
   *      if v >= Beta then return v
   *      alpha <- MAX(alpha, v)
   *    return v

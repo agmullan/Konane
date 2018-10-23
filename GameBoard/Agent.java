@@ -1,44 +1,124 @@
 /**
 * @author: Francine Dennehy
 * @author: Alexandra Mullan
-* @version: 1.0
+* @version: 1.5
 * This class contains the methods to set up the artifical interegents.
 *
 **/
+import java.util.*;
+
 public class Agent extends Player{
 
-  MoveGenerator moveGenerator;
-  Strategy strategy;
-  char myColor;
+//Declarations
+  private MoveGenerator moveGenerator;
+  private Strategy strategy;
+  private char myColor;
+  private boolean isCPU;
 
-  public Agent(char myColor){
-    moveGenerator = new MoveGenerator();
-    this.myColor= myColor;
-  }
 
-  public GameBoard takeTurn(GameBoard currentBoardState){
-    Move[] availableMoves = moveGenerator.getMoves(currentBoardState);
-    Move nextMove = chooseMove(availableMoves);
-    return generateBoard(nextMove, currentBoardState);
-  }
+/**
+  * @version: 1.5
+  * This is the constructor for the agent class. It takes in a char denoting its color and a
+  * boolean saying if it is the CPU or not.
+ **/
+  public Agent(char myColor, boolean isCPU){
+    this.myColor = myColor;
+    this.isCPU = isCPU;
+    moveGenerator = new MoveGenerator(myColor);
+  }//end of Agent(char myColor, boolean isCPU)
 
-  public Move chooseMove(Move[] availableMoves){
-    //this is where you call the strategy
-    return availableMoves[0];
-  }
+/**
+  * @version: 1.0
+  * This is a getter method that returns the value of isCPU
+ **/
+  public boolean isCPU(){
+    return isCPU;
+  }//end of isCPU
 
-  public GameBoard generateBoard(Move currentMove, GameBoard currentBoardState){
-    GameBoard gameState = currentBoardState;
+/**
+  * @version: 1.0
+  * This is a getter method that returns the char denoting the agent's color
+ **/
+  public char myColor(){
+    return myColor;
+  }//end of myColor
 
-    if(currentMove.removeList.size() > 0){
-      for(int i = 0; i<currentMove.removeList.size(); i++){
-        Tuple t = currentMove.removeList.get(i);
-        gameState.replace(t.x,t.y,'e');
-      }
-      gameState.replace(currentMove.currentLocation.x,currentMove.currentLocation.y, 'e');
+/**
+  * @version: 1.0
+  * This method is called to have the agent take the first turn.
+  * It returns an ArrayList<Move> of all the available moves at the start of the game.
+  * It calls a method found within the MoveGenerator class to find the available moves
+  * of the first turn.
+ **/
+  public ArrayList<Move> takeFirstTurn(GameBoard currentBoardState){
+    ArrayList<Move> availableMoves = moveGenerator.first_turn(myColor,currentBoardState);
+    return availableMoves; //chooseMove(availableMoves);
+  }//end of takeFirstTurn(GameBoard currentBoardState)
 
-      gameState.replace(currentMove.futureLocation.x,currentMove.futureLocation.y, myColor);
+/**
+  * @version: 1.0
+  * This method is called to have the agent take its first turn which relays on
+  * a different method found within the MoveGenerator class. This like the above method
+  * returns an ArrayList<Move> of all the available moves the agent has at that time.
+  *
+ **/
+  public Move takeTurn1(GameBoard currentBoardState){
+
+    ArrayList<Move> availableMoves = moveGenerator.getMoves(currentBoardState.gameState());
+
+    if(availableMoves.size() == 0){
+        return new Move(true);
     }
-    return gameState;
-  }
+    //Move nextMove = ;
+    return chooseMove(availableMoves);
+  }//end of takeTurn1(GameBoard currentBoardState)
+
+/**
+  * @version: 1.0
+  * This method is called to have the agent take its turn. This is similar to the takeTurn1()
+  * medthod above. However, this is used in the subsequent turns of the game until the game
+  * concludes.
+  *
+ **/
+  public ArrayList<Move> takeTurn(GameBoard currentBoardState){
+
+    ArrayList<Move> availableMoves = moveGenerator.getMoves(currentBoardState.gameState());
+    //Move nextMove = ;
+    return availableMoves;
+  }//end of takeTurn(GameBoard currentBoardState)
+
+/**
+  * @version: 1.0
+  * This method is used to select a move from the generated list of moves available to the
+  * agent. The method first checks to see if the availableMoves ArrayList is less
+  * then zero. In this case it just returns the first move generated. If the ArrayList
+  * is not empty then a new move is created and returned.
+ **/
+  public Move chooseMove(ArrayList<Move> availableMoves){
+    //this is where you call the strategy
+    if(availableMoves.size() > 0){
+      return availableMoves.get(0);
+    }else{
+        Move m = new Move(true);
+        return m;
+    }
+  }//end chooseMove(ArrayList<Move> availableMoves)
+
+/**
+  * @version: 1.0
+  * 
+  *
+  *
+  *
+ **/
+
+  public Move playerChooseMove(ArrayList<Move> availableMoves, int i){
+    if(availableMoves.size() > 0){
+      return availableMoves.get(i);
+    }else{
+        Move m = new Move(true);
+        return m;
+    }
+  }//end of playerChooseMove(ArrayList<Move> availableMoves, int i)
+
 }//end of Agent class

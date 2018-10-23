@@ -16,24 +16,24 @@ public class game_driver{
  **/
 public static void main(String[] args){
 
-GameBoard game = new GameBoard();
-MoveGenerator mg = new MoveGenerator();
+// GameBoard game = new GameBoard();
+// MoveGenerator mg = new MoveGenerator();
+//
+// game.replace(7,7,'e');
+// game.replace(6,7,'e');
+// //7,5
+//
+// game.printGameBoard();
+//
+// Tuple t = new Tuple(5,7);
+//
+// ArrayList<Tuple> list = mg.get_jump('b', game, t);
+//
+// for (int i = 0; i < list.size(); i++){
+//   System.out.println(list.get(i).toString());
+// }
 
-game.replace(7,7,'e');
-game.replace(6,7,'e');
-//7,5
-
-game.printGameBoard();
-
-Tuple t = new Tuple(5,7);
-
-ArrayList<Tuple> list = mg.get_jump('b', game, t);
-
-for (int i = 0; i < list.size(); i++){
-  System.out.println(list.get(i).toString());
-}
-
-
+ GameController gB = new GameController();
 
 }//end of main
 
