@@ -53,7 +53,17 @@ public class GameController{
       m = p.chooseMove(moves);
     }
     
-    gameWon = checkForWin(m, "Black", "White");
+    String loser;
+    String winner;
+    if(p.myColor() == 'b'){
+        loser = "Black";
+        winner = "White";
+    }else{
+        loser = "White";
+        winner = "Black";
+    }
+    
+    gameWon = checkForWin(m, loser, winner);
 
     gameBoard.update(m, p.myColor());
     gameBoard.printGameBoard();
@@ -87,6 +97,10 @@ public class GameController{
   }
 
   public int selectMove(ArrayList<Move> alm, char myColor){
+    if(alm.size() == 0){
+        System.out.println("No moves");
+        return 0;
+    }   
     System.out.println(myColor + "'s moves:");
     for(int i = 0; i < alm.size(); i++){
         System.out.println(alm.get(i));
@@ -94,7 +108,7 @@ public class GameController{
     scan = new Scanner(System.in);
     System.out.println("Enter the number of the move you choose.");
     int i = scan.nextInt()-1;
-    //scan.close();
+    
     return i;
   }
 

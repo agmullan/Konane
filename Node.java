@@ -22,7 +22,7 @@ public class Node{
     children = new ArrayList<Node>();
     this.parent = parent;
     isLeaf = true;
-    parent.isLeaf = false;
+    //parent.isLeaf = false;
     parent.addChild(this);
   }
   
@@ -32,7 +32,7 @@ public class Node{
     children = new ArrayList<Node>();
     this.parent = parent;
     isLeaf = true;
-    parent.isLeaf = false;
+    //parent.isLeaf = false;
     parent.addChild(this);
     }
 

@@ -15,6 +15,13 @@ public class Move{
         removeList = new ArrayList<Tuple>();
         noMove = false;
     }
+    
+    public Move(Tuple c, Tuple f){
+        currentLocation = c;
+        futureLocation = f;
+        removeList = new ArrayList<Tuple>();
+        noMove = false;
+    }
 
     public Move(){
         removeList = new ArrayList<Tuple>();

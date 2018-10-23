@@ -48,9 +48,9 @@ public class MoveGenerator{
             }
             else if(currentBoardState.get_game_state(0,0) == 'e'){
                 Move m1 = new Move();
-                m1.removeList().add(new Tuple(1,2));
+                m1.removeList().add(new Tuple(0,1));
                 Move m2 = new Move();
-                m2.removeList().add(new Tuple(2,1));
+                m2.removeList().add(new Tuple(1,1));
 
                 legal_moves.add(m1);
                 legal_moves.add(m2);
@@ -97,10 +97,10 @@ public class MoveGenerator{
         ArrayList<Tuple> possible_moves = new ArrayList<Tuple>();
         ArrayList<Tuple> legal_jumps = new ArrayList<Tuple>();
 
-        Tuple pos_one = new Tuple(t.x(), t.y()-1); //up
-        Tuple pos_two = new Tuple(t.x()-1, t.y()); //left
-        Tuple pos_three = new Tuple(t.x(), t.y()+1); //down
-        Tuple pos_four = new Tuple(t.x()+1, t.y()); //right
+        Tuple pos_one = new Tuple(t.x(), t.y()-2); //up
+        Tuple pos_two = new Tuple(t.x()-2, t.y()); //left
+        Tuple pos_three = new Tuple(t.x(), t.y()+2); //down
+        Tuple pos_four = new Tuple(t.x()+2, t.y()); //right
 
         possible_moves.add(pos_one);
         possible_moves.add(pos_two);
@@ -240,33 +240,54 @@ public class MoveGenerator{
             }
 
         }
-        
+
         System.out.println("There are " + leaves.size() +" leaves, so there should be " + leaves.size() + " moves");
-        
-        //backtrack up all the leaf nodes to get complete moves
-        //for(int x = 0; x < t.size(); x++){
-            for(int i = 0; i< leaves.size(); i++){
-                Node r = leaves.get(i); //set r = to a leaf
-                
-                int lX = r.x(); //save the leaf's coordinates
-                int lY = r.y();
-                
-                while(!r.isRoot()){ //set r = this leaf's root
-                    r = r.parent();
-                }
-                
 
-                int rX = r.x();
-                int rY = r.y();
+        for(int i = 0; i< leaves.size(); i++){
+            Node r = leaves.get(i); //set r = to a leaf
 
-                Move m = new Move(rX, rY, lX, lY);
+            int lX = r.x(); //save the leaf's coordinates
+            int lY = r.y();
 
-                createRemoveList(m, leaves.get(i));
-
-                alm.add(m);
+            while(!r.isRoot()){ //set r = this leaf's root
+                r = r.parent();
             }
-        //}
 
+            int rX = r.x();
+            int rY = r.y();
+
+            Move m = new Move(rX, rY, lX, lY);
+
+            createRemoveList(m, leaves.get(i));
+
+            alm.add(m);
+        }
+
+        return alm;
+    }
+
+    public ArrayList<Move> expandMoves(ArrayList<Move> alm){
+        for(int i = 0; i < alm.size(); i++){
+            int counter = alm.get(i).removeList().size();
+            if(counter > 1){ //more than one item being removed
+                while(counter > 0){
+                    int startX = alm.get(i).currentLocation().x();
+                    int startY = alm.get(i).currentLocation().y();
+
+                    int endX = (alm.get(i).removeList().get(counter).x() + 
+                            alm.get(i).removeList().get(counter-1).x())/2;
+                    int endY = (alm.get(i).removeList().get(counter).y() + 
+                            alm.get(i).removeList().get(counter-1).y())/2;
+
+                    Move m = new Move(startX, startY, endX, endY);
+                    ArrayList<Tuple> newRemoves = new ArrayList<Tuple>();
+                    for(int j = 0; j < counter-1; j++){
+                        m.addRemoval(alm.get(i).removeList().get(j));
+                    }
+                    counter--;
+                }
+            }
+        }
         return alm;
     }
 
@@ -307,12 +328,12 @@ public class MoveGenerator{
         for(int i = 0; i < jumps.size(); i++){
             Node n = new Node(jumps.get(i), parent);
 
-            if(nodeNotInPath(n, t.getRoot())){
-                t.addNode(n);
-                char[][] newState = tempBoard(state, jumps.get(i), parent.t());
+            //if(nodeNotInPath(n, t.getRoot())){
+            t.addNode(n);
+            char[][] newState = tempBoard(state, jumps.get(i), parent.t());
 
-                buildMoveTree(t, newState, n);
-            }
+            buildMoveTree(t, newState, n);
+            //}
         }
     }
 
@@ -339,6 +360,7 @@ public class MoveGenerator{
         }
         newState[from.x()][from.y()] = 'e';
         newState[to.x()][to.y()] = myColor;
+        newState[(to.x()+from.x())/2][(to.y()+from.y())/2] = 'e';
         //get rid of the middle piece
         return newState;
     }
