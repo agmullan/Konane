@@ -97,6 +97,7 @@ public class Agent extends Player{
   * agent. The method first checks to see if the availableMoves ArrayList is less
   * then zero. In this case it just returns the first move generated. If the ArrayList
   * is not empty then a new move is created and returned.
+  * !MODIFY!
  **/
   public Move chooseMove(ArrayList<Move> availableMoves){
     //this is where you call the strategy

@@ -104,7 +104,7 @@ public int Max_Value(GameBoard gb, /* Moves ,*/ int alpha, int beta, int utility
 
 
   if(advanced == true){
-      v = Math.max(v, MIN(child , Math.max(alpha, (util - 2)), Math.min(beta, (util + 2))));
+    v = Math.max(v, MIN(child , Math.max(alpha, (util - 2)), Math.min(beta, (util + 2))));
   }
   else{
     v = Math.max(v, MIN(temp ,alpha, beta));
