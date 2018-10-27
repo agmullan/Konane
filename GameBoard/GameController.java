@@ -33,7 +33,7 @@ public class GameController{
 
 /**
   * @version 1.0
-  * @return void 
+  * @return void
   * This is the method that controls the first turn of the game. It generates a list of moves
   * based on whether the player is an agent or human and what color is assigned to each player.
   *
@@ -184,5 +184,20 @@ public class GameController{
       System.out.println(black.isCPU());
     }
   }//end of chooseYourColor()
+
+/**
+  * @version 1.0
+  * @return void
+ **/
+  public void chooseDifficulty(){
+     String ans = "";
+     boolean validInput = false;
+
+     scan = new Scanner(System.in);
+
+     //while(!validInput){
+        // System.out.println();
+     //}
+  }
 
 }//end of GameController class

@@ -10,21 +10,22 @@ import java.util.*;
 public class Agent extends Player{
 
 //Declarations
-  private MoveGenerator moveGenerator;
-  private Strategy strategy;
-  private char myColor;
-  private boolean isCPU;
+ private MoveGenerator moveGenerator;
+ private Strategy strategy;
+ private char myColor;
+ private boolean isCPU;
 
 
 /**
-  * @version: 1.5
+  * @version: 2.0
   * This is the constructor for the agent class. It takes in a char denoting its color and a
   * boolean saying if it is the CPU or not.
  **/
   public Agent(char myColor, boolean isCPU){
     this.myColor = myColor;
     this.isCPU = isCPU;
-    moveGenerator = new MoveGenerator(myColor);
+    moveGenerator = new MoveGenerator();
+    strategy = new Strategy(moveGenerator, 6); //max depth hard coded
   }//end of Agent(char myColor, boolean isCPU)
 
 /**
@@ -91,22 +92,20 @@ public class Agent extends Player{
   }//end of takeTurn(GameBoard currentBoardState)
 
 /**
-  * @version 1.0
+  * @version 2.0
   * @return Move m
   * This method is used to select a move from the generated list of moves available to the
   * agent. The method first checks to see if the availableMoves ArrayList is less
   * then zero. In this case it just returns the first move generated. If the ArrayList
   * is not empty then a new move is created and returned.
-  * !MODIFY!
  **/
-  public Move chooseMove(ArrayList<Move> availableMoves){
-    //this is where you call the strategy
-    if(availableMoves.size() > 0){
-      return availableMoves.get(0);
-    }else{
-        Move m = new Move(true);
-        return m;
-    }
+ public Move chooseMove(ArrayList<Move> availableMoves, GameBoard currentBoardState, char myColor, boolean firstW){
+     if(availableMoves.size() > 0){
+         return strategy.alpha_beta_search(currentBoardState, myColor, availableMoves, firstW);
+     }else{
+         Move m = new Move(true);
+         return m;
+     }
   }//end chooseMove(ArrayList<Move> availableMoves)
 
 /**

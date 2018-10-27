@@ -25,9 +25,9 @@ private double orig_X, orig_Y;
 
     });
 
-    // setOnMouseDragged(e ->{
-    //   relocate(e.getSceneX() - mouseX + orig_X, e.getSceneY() - mouseY + orig_Y);
-    // });
+    setOnMouseDragged(e ->{
+      relocate(e.getSceneX() - mouseX + orig_X, e.getSceneY() - mouseY + orig_Y);
+    });
 
 
   }//end constructor

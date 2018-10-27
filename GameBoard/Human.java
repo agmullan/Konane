@@ -15,6 +15,7 @@ public class Human extends Player{
     private char myColor;
     private MoveGenerator moveGenerator;
     private boolean isCPU;
+    private Strategy strategy;
 
 /**
   * @version 1.5
@@ -25,6 +26,7 @@ public class Human extends Player{
       this.myColor = myColor;
       this.isCPU = isCPU;
       moveGenerator = new MoveGenerator(myColor);
+      strategy = new Strategy(moveGenerator, 6); //hard coded in
   }// end of  Human(char myColor, boolean isCPU)
 
 /**
@@ -79,13 +81,13 @@ public class Human extends Player{
   * then zero. In this case it just returns the first move generated. If the ArrayList
   * is not empty then a new move is created and returned.
  **/
-  public Move chooseMove(ArrayList<Move> availableMoves){
-      if(availableMoves.size() > 0){
-          return availableMoves.get(0);
-      }else{
-          Move m = new Move(true);
-          return m;
-      }
+ public Move chooseMove(ArrayList<Move> availableMoves, GameBoard currentBoardState, boolean firstW){
+     if(availableMoves.size() > 0){
+         return strategy.alpha_beta_search(currentBoardState, myColor, null, firstW);
+     }else{
+         Move m = new Move(true);
+         return m;
+     }
   }//end of chooseMove(ArrayList<Move> availableMoves)
 
 /**
