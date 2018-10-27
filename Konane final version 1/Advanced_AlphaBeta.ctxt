@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.params=gb\ mG\ possibleMoves
+comment0.target=void\ Advanced_Alpha_Beta_Search(GameBoard,\ MoveGenerator,\ java.util.ArrayList)
+comment0.text=\r\n\ @version\:\ 1.0\r\n\ This\ function\ is\ called\ to\ perform\ Alphaq\ Beta\ Pruning\r\n
+comment1.params=gb\ alpha\ beta\ util
+comment1.target=int\ Max_Value(GameBoard,\ int,\ int,\ int)
+comment1.text=\r\n\ @version\ 1\r\n\ This\ finds\ the\ max\ value\ for\ the\ utility\ state.\r\n
+comment2.params=a\ b\ c
+comment2.target=int\ MAX(int,\ int,\ int)
+comment2.text=\r\n\ @version\ 1\r\n\ This\ is\ a\ helper\ function\ that\ is\ used\ in\ Min_Value\ when\ it\ needs\ to\ return\r\n\ the\ max\ value\ of\ three\ different\ numbers.\r\n
+comment3.params=gb\ alpha\ beta\ util
+comment3.target=int\ Min_Value(GameBoard,\ int,\ int,\ int)
+comment3.text=\r\n\ @version\ 1\r\n\ This\ finds\ the\ min\ value\ for\ the\ utility\ state.\r\n
+comment4.params=a\ b\ c
+comment4.target=int\ MIN(int,\ int,\ int)
+comment4.text=\r\n\ @version\ 1\r\n\ @return\ int\ result\r\n\ This\ is\ a\ helper\ function\ that\ is\ used\ in\ Max_Value\ when\ it\ needs\ to\ return\r\n\ the\ min\ value\ of\ three\ different\ numbers.\r\n
+numComments=5
