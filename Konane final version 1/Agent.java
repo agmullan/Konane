@@ -31,43 +31,20 @@ public class Agent extends Player{
 
     public ArrayList<Move> takeFirstTurn(GameBoard currentBoardState){
         ArrayList<Move> availableMoves = moveGenerator.first_turn(myColor,currentBoardState);
-        return availableMoves; //chooseMove(availableMoves);
-    }
-
-    public Move takeTurn1(GameBoard currentBoardState){
-
-        ArrayList<Move> availableMoves = moveGenerator.getMoves(currentBoardState.gameState(),myColor);
-
-        if(availableMoves.size() == 0){
-            return new Move(true);
-        }
-        //Move nextMove = ;
-        return chooseMove(availableMoves, currentBoardState, myColor);
+        return availableMoves; 
     }
 
     public ArrayList<Move> takeTurn(GameBoard currentBoardState){
-
         ArrayList<Move> availableMoves = moveGenerator.getMoves(currentBoardState.gameState(), myColor);
         return availableMoves;
     }
 
-    public Move chooseMove(ArrayList<Move> availableMoves, GameBoard currentBoardState, char myColor){
-        //this is where you call the strategy
+    public Move chooseMove(ArrayList<Move> availableMoves, GameBoard currentBoardState, char myColor, boolean firstW){
         if(availableMoves.size() > 0){
-            return strategy.alpha_beta_search(currentBoardState, myColor);
-
+            return strategy.alpha_beta_search(currentBoardState, myColor, availableMoves, firstW);
         }else{
             Move m = new Move(true);
             return m;
         }
     }
-
-    //     public Move playerChooseMove(){
-    //         if(availableMoves.size() > 0){
-    //            
-    //         }else{
-    //             Move m = new Move(true);
-    //             return m;
-    //         }
-    //     }
 }//end of Agent class

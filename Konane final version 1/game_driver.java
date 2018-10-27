@@ -16,7 +16,6 @@ public class game_driver{
  **/
 public static void main(String[] args){
   //call methods here
-  System.out.println("Hello");
   GameController gB = new GameController();
 
 }//end of main

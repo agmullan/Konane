@@ -33,7 +33,7 @@ public class Human extends Player{
 
     public ArrayList<Move> takeFirstTurn(GameBoard currentBoardState){
         ArrayList<Move> availableMoves = moveGenerator.first_turn(myColor,currentBoardState);
-        return availableMoves; //chooseMove(availableMoves);
+        return availableMoves;
     }
 
     public ArrayList<Move> takeTurn(GameBoard currentBoardState){
@@ -41,9 +41,9 @@ public class Human extends Player{
         return availableMoves;
     }
 
-    public Move chooseMove(ArrayList<Move> availableMoves, GameBoard currentBoardState){
+    public Move chooseMove(ArrayList<Move> availableMoves, GameBoard currentBoardState, boolean firstW){
         if(availableMoves.size() > 0){
-            return strategy.alpha_beta_search(currentBoardState, myColor);
+            return strategy.alpha_beta_search(currentBoardState, myColor, null, firstW);
         }else{
             Move m = new Move(true);
             return m;

@@ -9,10 +9,8 @@
 import java.util.*;
 
 public class MoveGenerator{
-    //private char myColor;
 
     public MoveGenerator(){
-        //this.myColor = myColor;
     }//end of Constructor
 
     public ArrayList<Move> first_turn(char c, GameBoard currentBoardState){
@@ -213,7 +211,7 @@ public class MoveGenerator{
         for(int i = 0; i < moveablePieces.size(); i++){
             moveSequences.add(new Tree(moveablePieces.get(i).x(), moveablePieces.get(i).y()));
         }
-        System.out.println(moveablePieces.size() + " cosas pueden mover en al menos de una manera");
+        //System.out.println(moveablePieces.size() + " cosas pueden mover en al menos de una manera");
         //build each tree
         for(int i = 0; i<moveSequences.size(); i++){
             Tree tr = moveSequences.get(i);
@@ -241,7 +239,7 @@ public class MoveGenerator{
 
         }
 
-        System.out.println("There are " + leaves.size() +" leaves, so there should be " + leaves.size() + " moves");
+        //System.out.println("There are " + leaves.size() +" leaves, so there should be " + leaves.size() + " moves");
 
         for(int i = 0; i< leaves.size(); i++){
             Node r = leaves.get(i); //set r = to a leaf
@@ -301,7 +299,6 @@ public class MoveGenerator{
             int noSteps = fullMove.removeList().size();
             if(noSteps > 1){
             
-
                 int startX = fullMove.fLX();
                 int startY = fullMove.fLY();
                 int endX = fullMove.removeList().get(noSteps-1).x();
@@ -318,7 +315,7 @@ public class MoveGenerator{
         for(int i = 0; i < alm.size()-1; i++){ //for each move in arraylist
             for(int j = i+1; j<alm.size(); j ++){
                 if(alm.get(i).compareTo(alm.get(j)) == 0){//if theyre equal
-                    System.out.println("Remove " + alm.get(j));
+                    //System.out.println("Remove " + alm.get(j));
                     alm.remove(j);
                     
                 }
@@ -378,10 +375,11 @@ public class MoveGenerator{
                 newState[i][j] = oldState[i][j];
             }
         }
+        
         newState[from.x()][from.y()] = 'e';
         newState[to.x()][to.y()] = myColor;
         newState[(to.x()+from.x())/2][(to.y()+from.y())/2] = 'e';
-        //get rid of the middle piece
+      
         return newState;
     }
 
@@ -439,7 +437,5 @@ public class MoveGenerator{
         }
         return false;
     }
-
-    //based on the current board state return a move with active piece location,
 
 }//end of MoveGenerator class

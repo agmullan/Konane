@@ -34,6 +34,7 @@ public class Move implements Comparable<Move>{
 
     public Move(boolean b){
         noMove = b;
+        removeList = new ArrayList<Tuple>();
     }
 
     public boolean noMove(){
@@ -63,9 +64,11 @@ public class Move implements Comparable<Move>{
     public Tuple currentLocation(){
         return currentLocation;
     }
+    
     public Tuple futureLocation(){
         return futureLocation;
     }
+    
     public ArrayList<Tuple> removeList(){
         return removeList;
     }
