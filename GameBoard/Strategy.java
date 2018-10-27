@@ -52,6 +52,22 @@ public class Strategy{
       return v;
   }
 
+  public Move minimax_search(GameBoard gb, char myColor, ArrayList<Move> c, boolean firstW){ //Move currentMove
+      Move m = new Move();
+      Move v;
+      if(firstW){
+          v = minimax_max(gb.gameState(), m, Integer.MIN_VALUE, Integer.MAX_VALUE, 0, myColor, c);
+      }else{
+          v = minimax_max(gb.gameState(), m, Integer.MIN_VALUE, Integer.MAX_VALUE, 0, myColor, null);
+      }
+      return v;
+  }//end of minimax_search()
+
+/**
+ * @version 2.0
+ * @return int v
+ * This finds the min value for the utility state.
+**/
   public Move min(char[][] gb, Move m, int alpha, int beta, int currentDepth, char myColor){ //"returns a utility value" in this case it will return the whole move which contains a utlity value
       m.setV(Integer.MAX_VALUE); //v = Integer.MAX_VALUE;
        ArrayList<Move> availableMoves = mG.getMoves(gb, myColor);
@@ -70,6 +86,30 @@ public class Strategy{
       return m;
   }
 
+  /**
+   * @version 2.0
+   * @return int v
+   * This finds the min value for the utility state for the minimax algorithm 
+  **/
+  public Move minimax_min(char[][] gb, Move m, int alpha, int beta, int currentDepth, char myColor){ //"returns a utility value" in this case it will return the whole move which contains a utlity value
+      m.setV(Integer.MAX_VALUE); //v = Integer.MAX_VALUE;
+       ArrayList<Move> availableMoves = mG.getMoves(gb, myColor);
+
+      if(terminal_test(m, gb, currentDepth, myColor, availableMoves))
+          return m;
+
+      for(int i = 0; i<availableMoves.size(); i++){//for each move in the set of available moves
+          char[][] tempBoard = mG.tempBoard(gb, availableMoves.get(i).currentLocation(), availableMoves.get(i).futureLocation(),myColor);
+          m.setV(fourMin(m.getV(), minimax_max(tempBoard, availableMoves.get(i), alpha, beta, currentDepth+1, myColor, null).getV(), alpha, beta));
+      }
+      return m;
+  }
+
+/**
+ * @version 1.1
+ * @return int v
+ * This finds the max value for the utility state.
+**/
   public Move max(char[][] gb, Move m, int alpha, int beta, int currentDepth, char myColor, ArrayList<Move> c){
       m.setV(Integer.MIN_VALUE);
       ArrayList<Move> availableMoves = mG.getMoves(gb, myColor);
@@ -88,6 +128,29 @@ public class Strategy{
       return m;
   }
 
+  /**
+   * @version 1.1
+   * @return int v
+   * This finds the max value for the utility state for the minimax algorithm
+  **/
+    public Move minimax_max(char[][] gb, Move m, int alpha, int beta, int currentDepth, char myColor, ArrayList<Move> c){
+        m.setV(Integer.MIN_VALUE);
+        ArrayList<Move> availableMoves = mG.getMoves(gb, myColor);
+
+        if(terminal_test(m, gb, currentDepth, myColor, availableMoves))
+            return m;
+
+        for(int i = 0; i<availableMoves.size(); i++){//for each move in the set of available moves
+            char[][] tempBoard = mG.tempBoard(gb, availableMoves.get(i).currentLocation(), availableMoves.get(i).futureLocation(), myColor);
+            m.setV(fourMax(m.getV(), minimax_min(tempBoard, availableMoves.get(i), alpha, beta, currentDepth+1, myColor).getV(), alpha, beta));
+        }
+        return m;
+    }
+
+/**
+  * @version 1.0
+  * @return boolean
+ **/
   public boolean terminal_test(Move m, char[][] gb, int currentDepth, char myColor, ArrayList<Move> moves){
       if(moves.size() == 0)
          return true;
@@ -123,4 +186,4 @@ public class Strategy{
       int t3 = Math.max(t2,d);
       return t3;
   }
-}
+}//end of Strategy
