@@ -15,17 +15,16 @@ public class Agent extends Player{
  private char myColor;
  private boolean isCPU;
 
-
 /**
   * @version: 2.0
   * This is the constructor for the agent class. It takes in a char denoting its color and a
   * boolean saying if it is the CPU or not.
  **/
-  public Agent(char myColor, boolean isCPU){
-    this.myColor = myColor;
-    this.isCPU = isCPU;
-    moveGenerator = new MoveGenerator();
-    strategy = new Strategy(moveGenerator, 6); //max depth hard coded
+ public Agent(char myColor, boolean isCPU){
+     this.myColor = myColor;
+     this.isCPU = isCPU;
+     moveGenerator = new MoveGenerator();
+     strategy = new Strategy(moveGenerator, 6); //max depth hard coded
   }//end of Agent(char myColor, boolean isCPU)
 
 /**
@@ -54,29 +53,10 @@ public class Agent extends Player{
   * It calls a method found within the MoveGenerator class to find the available moves
   * of the first turn.
  **/
-  public ArrayList<Move> takeFirstTurn(GameBoard currentBoardState){
-    ArrayList<Move> availableMoves = moveGenerator.first_turn(myColor,currentBoardState);
-    return availableMoves; //chooseMove(availableMoves);
+ public ArrayList<Move> takeFirstTurn(GameBoard currentBoardState){
+     ArrayList<Move> availableMoves = moveGenerator.first_turn(myColor,currentBoardState);
+     return availableMoves;
   }//end of takeFirstTurn(GameBoard currentBoardState)
-
-/**
-  * @version 1.0
-  * @return Move chooseMove(availableMoves)
-  * This method is called to have the agent take its first turn which relays on
-  * a different method found within the MoveGenerator class. This like the above method
-  * returns an ArrayList<Move> of all the available moves the agent has at that time.
-  *
- **/
-  public Move takeTurn1(GameBoard currentBoardState){
-
-    ArrayList<Move> availableMoves = moveGenerator.getMoves(currentBoardState.gameState());
-
-    if(availableMoves.size() == 0){
-        return new Move(true);
-    }
-    //Move nextMove = ;
-    return chooseMove(availableMoves);
-  }//end of takeTurn1(GameBoard currentBoardState)
 
 /**
   * @version 1.0
@@ -86,9 +66,9 @@ public class Agent extends Player{
   * concludes.
   *
  **/
-  public ArrayList<Move> takeTurn(GameBoard currentBoardState){
-    ArrayList<Move> availableMoves = moveGenerator.getMoves(currentBoardState.gameState());
-    return availableMoves;
+ public ArrayList<Move> takeTurn(GameBoard currentBoardState){
+     ArrayList<Move> availableMoves = moveGenerator.getMoves(currentBoardState.gameState(), myColor);
+     return availableMoves;
   }//end of takeTurn(GameBoard currentBoardState)
 
 /**
@@ -107,21 +87,5 @@ public class Agent extends Player{
          return m;
      }
   }//end chooseMove(ArrayList<Move> availableMoves)
-
-/**
-  * @version 1.0
-  * @return Move m
-  *
-  *
-  *
- **/
-  public Move playerChooseMove(ArrayList<Move> availableMoves, int i){
-    if(availableMoves.size() > 0){
-      return availableMoves.get(i);
-    }else{
-        Move m = new Move(true);
-        return m;
-    }
-  }//end of playerChooseMove(ArrayList<Move> availableMoves, int i)
 
 }//end of Agent class

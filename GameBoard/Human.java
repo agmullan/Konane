@@ -22,11 +22,11 @@ public class Human extends Player{
   * This is the constructor for the Human class. It takes in a char denoting its color and a
   * boolean saying if it is the CPU or not.
  **/
-  public Human(char myColor, boolean isCPU){
-      this.myColor = myColor;
-      this.isCPU = isCPU;
-      moveGenerator = new MoveGenerator(myColor);
-      strategy = new Strategy(moveGenerator, 6); //hard coded in
+ public Human(char myColor, boolean isCPU){
+     this.myColor = myColor;
+     this.isCPU = isCPU;
+     moveGenerator = new MoveGenerator();
+     strategy = new Strategy(moveGenerator, 6); //hard coded in
   }// end of  Human(char myColor, boolean isCPU)
 
 /**
@@ -55,9 +55,9 @@ public class Human extends Player{
   * It calls a method found within the MoveGenerator class to find the available moves
   * of the first turn.
  **/
-  public ArrayList<Move> takeFirstTurn(GameBoard currentBoardState){
-      ArrayList<Move> availableMoves = moveGenerator.first_turn(myColor,currentBoardState);
-      return availableMoves; //chooseMove(availableMoves);
+ public ArrayList<Move> takeFirstTurn(GameBoard currentBoardState){
+     ArrayList<Move> availableMoves = moveGenerator.first_turn(myColor,currentBoardState);
+     return availableMoves;
   }// end if takeFirstTurn(GameBoard currentBoardState)
 
 /**
@@ -68,9 +68,9 @@ public class Human extends Player{
   * returns an ArrayList<Move> of all the available moves the agent has at that time.
   *
  **/
-  public ArrayList<Move> takeTurn(GameBoard currentBoardState){
-      ArrayList<Move> availableMoves = moveGenerator.getMoves(currentBoardState.gameState());
-      return availableMoves;
+ public ArrayList<Move> takeTurn(GameBoard currentBoardState){
+     ArrayList<Move> availableMoves = moveGenerator.getMoves(currentBoardState.gameState(), myColor);
+     return availableMoves;
   }//end of takeTurn(GameBoard currentBoardState)
 
 /**
@@ -97,13 +97,13 @@ public class Human extends Player{
   *
   *
  **/
-  public Move playerChooseMove(ArrayList<Move> availableMoves, int i){
-      if(availableMoves.size() > 0){
-          return availableMoves.get(i);
-      }else{
-          Move m = new Move(true);
-          return m;
-      }
+ public Move playerChooseMove(ArrayList<Move> availableMoves, int i){
+     if(availableMoves.size() > 0){
+         return availableMoves.get(i);
+     }else{
+         Move m = new Move(true);
+         return m;
+     }
   }//end of playerChooseMove(ArrayList<Move> availableMoves, int i)
 
 }//end of Human class

@@ -13,22 +13,22 @@ import java.util.*;
 public class GameController{
 
 //Declarations
-  private GameBoard gameBoard;
-  private boolean gameWon;
-  private Player white, black;
-  private int round = 2;
-  static Scanner scan;
-
+private GameBoard gameBoard;
+private boolean gameWon;
+private Player white, black;
+private int round = 2;
+static Scanner scan;
 /**
   * @version 1.0
   * This is the Constructor of the GameController class. It is solely
   * responsible for calling all the methods need to start and run a game to finish.
  **/
-  public GameController(){
-    gameBoard = new GameBoard();
-    gameWon = false;
-    chooseYourColor();
-    runGame();
+ public GameController(){
+     gameBoard = new GameBoard();
+     gameWon = false;
+     //chooseDifficulty();
+     chooseYourColor();
+     runGame();
   }//end of constructor
 
 /**
@@ -38,18 +38,18 @@ public class GameController{
   * based on whether the player is an agent or human and what color is assigned to each player.
   *
  **/
-  public void firstTurn(Player p){
-    ArrayList<Move> moves;
-    Move m;
-    if(!p.isCPU()){ //if this player is human
-      moves = p.takeFirstTurn(gameBoard);
-      m = p.playerChooseMove(moves, selectMove(moves, p.myColor()));
-    }else{
-      moves = p.takeFirstTurn(gameBoard);
-      m = p.chooseMove(moves);
-    }
-    gameBoard.update(m, p.myColor());
-    gameBoard.printGameBoard();
+ public void firstTurn(Player p){
+     ArrayList<Move> moves;
+     Move m;
+     if(!p.isCPU()){ //if this player is human
+         moves = p.takeFirstTurn(gameBoard);
+         m = p.playerChooseMove(moves, selectMove(moves, p.myColor()));
+     }else{
+         moves = p.takeFirstTurn(gameBoard);
+         m = p.chooseMove(moves, gameBoard, p.myColor(), true);
+     }
+     gameBoard.update(m, p.myColor());
+     gameBoard.printGameBoard();
   }//end of firstTurn(Player p)
 
 /**
@@ -61,21 +61,31 @@ public class GameController{
   * if the game is won or not and updats the gameboard to represent the new state.
   *
  **/
-  public void turn(Player p){
-    ArrayList<Move> moves;
-    Move m;
-    if(!p.isCPU()){ //if this player is human
-      moves = p.takeTurn(gameBoard);
-      m = p.playerChooseMove(moves, selectMove(moves, p.myColor()));
-    }else{
-      moves = p.takeTurn(gameBoard);
-      m = p.chooseMove(moves);
-    }
+ public void turn(Player p){
+     ArrayList<Move> moves;
+     Move m;
+     if(!p.isCPU()){ //if this player is human
+         moves = p.takeTurn(gameBoard);
+         m = p.playerChooseMove(moves, selectMove(moves, p.myColor()));
+     }else{
+         moves = p.takeTurn(gameBoard);
+         m = p.chooseMove(moves, gameBoard, p.myColor(), false);
+     }
 
-    gameWon = checkForWin(m, "Black", "White");
+     String loser;
+     String winner;
+     if(p.myColor() == 'b'){
+         loser = "Black";
+         winner = "White";
+     }else{
+         loser = "White";
+         winner = "Black";
+     }
 
-    gameBoard.update(m, p.myColor());
-    gameBoard.printGameBoard();
+     gameWon = checkForWin(m, loser, winner);
+
+     gameBoard.update(m, p.myColor());
+     gameBoard.printGameBoard();
   }//end turn(Player p)
 
 /**
@@ -85,31 +95,31 @@ public class GameController{
   * The loop is dependent on the gameWon boolean that is initially set to
   * false but updates to true when there is a winner.
  **/
-  public void runGame(){
+ public void runGame(){
 
-    ArrayList<Move> moves;
-    Move m;
+     ArrayList<Move> moves;
+     Move m;
 
-    gameBoard.printGameBoard();
+     gameBoard.printGameBoard();
 
-    //BLACK FIRST MOVE
-    System.out.println("round 1: Black");
-    firstTurn(black);
+     //BLACK FIRST MOVE
+     System.out.println("round 1: Black");
+     firstTurn(black);
 
-    //WHITE FIRST MOVE
-    System.out.println("round 1: White");
-    firstTurn(white);
+     //WHITE FIRST MOVE
+     System.out.println("round 1: White");
+     firstTurn(white);
 
-    //BEGIN REST OF GAME
-    while(!gameWon){
-      System.out.println("round " + round + ": Black");
-      turn(black);
+     //BEGIN REST OF GAME
+     while(!gameWon){
+         System.out.println("round " + round + ": Black");
+         turn(black);
 
-      System.out.println("round " + round + ": White");
-      turn(white);
+         System.out.println("round " + round + ": White");
+         turn(white);
 
-      round++;
-    }
+         round++;
+     }
   }//end of runGame()
 
 /**
@@ -118,16 +128,20 @@ public class GameController{
   * This is used to get the move from the human player.
   *
  **/
-  public int selectMove(ArrayList<Move> alm, char myColor){
-    System.out.println(myColor + "'s moves:");
-    for(int i = 0; i < alm.size(); i++){
-        System.out.println(alm.get(i));
-    }
-    scan = new Scanner(System.in);
-    System.out.println("Enter the number of the move you choose.");
-    int i = scan.nextInt()-1;
-    //scan.close();
-    return i;
+ public int selectMove(ArrayList<Move> alm, char myColor){
+     if(alm.size() == 0){
+         System.out.println("No moves");
+         return 0;
+     }
+     System.out.println(myColor + "'s moves:");
+     for(int i = 0; i < alm.size(); i++){
+         System.out.println(alm.get(i));
+     }
+     scan = new Scanner(System.in);
+     System.out.println("Enter the number of the move you choose.");
+     int i = scan.nextInt()-1;
+
+     return i;
   }//end  selectMove(ArrayList<Move> alm, char myColor)
 
 /**
@@ -136,13 +150,13 @@ public class GameController{
   * This method checks for the winner of the game and prints out the results.
   *
  **/
-  public boolean checkForWin(Move m, String loser, String winner){
-    if(m.noMove() == true){
-      scan.close();
-      System.out.println(loser + "! you are out of moves! " + winner + "! You win!");
-      System.exit(0);
-    }
-    return false;
+ public boolean checkForWin(Move m, String loser, String winner){
+     if(m.noMove() == true){
+         scan.close();
+         System.out.println(loser + "! you are out of moves! " + winner + "! You win!");
+         System.exit(0);
+     }
+     return false;
   }// end of checkForWin(Move m, String loser, String winner)
 
 /**
@@ -153,36 +167,36 @@ public class GameController{
   * opposite color but default
  **/
   public void chooseYourColor(){
-    String ans = "";
-    boolean validInput = false;
+        String ans = "";
+        boolean validInput = false;
 
-    scan = new Scanner(System.in);
+        scan = new Scanner(System.in);
 
-    while(!validInput){
+        while(!validInput){
 
-      System.out.println("Choose your color. Type b for black or w for white: ");
+            System.out.println("Choose your color. Type b for black or w for white: ");
 
-      ans = scan.next();
+            ans = scan.next();
 
-      if(ans.equals("b") || ans.equals("w")){
-        validInput = true;
-      }
+            if(ans.equals("b") || ans.equals("w")){
+                validInput = true;
+            }
 
-      if(!validInput){
-        System.out.println("invalid input, try again.");
-      }
-    }
-    //scan.close();
+            if(!validInput){
+                System.out.println("invalid input, try again.");
+            }
+        }
 
-    if(ans.equals("b")){
-      black = new Human('b', false);
-      white = new Agent('w', true);
-    }
-    else if(ans.equals("w")){
-      white = new Human('w', false);
-      black = new Agent('b', true);
-      System.out.println(black.isCPU());
-    }
+        if(ans.equals("b")){
+            black = new Human('b', false);
+            white = new Agent('w', true);
+        }
+        else if(ans.equals("w")){
+            System.out.println("HERE");
+            white = new Human('w', false);
+            black = new Agent('b', true);
+            System.out.println(black.isCPU());
+        }
   }//end of chooseYourColor()
 
 /**
