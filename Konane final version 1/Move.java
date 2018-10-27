@@ -64,11 +64,11 @@ public class Move implements Comparable<Move>{
     public Tuple currentLocation(){
         return currentLocation;
     }
-    
+
     public Tuple futureLocation(){
         return futureLocation;
     }
-    
+
     public ArrayList<Tuple> removeList(){
         return removeList;
     }
@@ -102,8 +102,15 @@ public class Move implements Comparable<Move>{
 
     @Override
     public String toString(){
-        String s = "from " + currentLocation + "\nto " + futureLocation + "\n";
-        s += "removes " + removeList.toString();
+        String s = "";
+        if(cLX() != -1){
+          s+="Move piece at " + currentLocation + " to " + futureLocation + "\n   ";
+          s += "Removes opponent's piece at " + removeList.toString()+"\n";
+        }else{
+          s+="Remove piece at " + removeList.toString()+"\n";
+        }
+
+
         return s;
     }
 

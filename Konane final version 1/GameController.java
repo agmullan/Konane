@@ -13,18 +13,20 @@ import java.util.*;
 public class GameController{
 
     //instance variables
-    private GameBoard gameBoard;
-    private boolean gameWon;
-    private Player white, black;
-    private int round = 2;
-    static Scanner scan;
+    private GameBoard      gameBoard;
+    private Player         white, black;
+    private static Scanner scan;
+    private boolean        gameWon;
+    private int            round       = 2;
+    private int            searchDepth = -1;
+    private int            speed       = -1;
 
     //constructor
     public GameController(){
         gameBoard = new GameBoard();
         gameWon = false;
-        //chooseDifficulty();
-        chooseYourColor();
+
+        initializeGameSettings();
         runGame();
     }
 
@@ -33,13 +35,12 @@ public class GameController{
         Move m;
         if(!p.isCPU()){ //if this player is human
             moves = p.takeFirstTurn(gameBoard);
-            m = p.playerChooseMove(moves, selectMove(moves, p.myColor()));
+            m     = p.playerChooseMove(moves, selectMove(moves, p.myColor()));
         }else{
             moves = p.takeFirstTurn(gameBoard);
-            m = p.chooseMove(moves, gameBoard, p.myColor(), true);
+            m     = p.chooseMove(moves, gameBoard, p.myColor(), true);
         }
         gameBoard.update(m, p.myColor());
-        gameBoard.printGameBoard();
     }
 
     public void turn(Player p){
@@ -47,10 +48,10 @@ public class GameController{
         Move m;
         if(!p.isCPU()){ //if this player is human
             moves = p.takeTurn(gameBoard);
-            m = p.playerChooseMove(moves, selectMove(moves, p.myColor()));
+            m     = p.playerChooseMove(moves, selectMove(moves, p.myColor()));
         }else{
             moves = p.takeTurn(gameBoard);
-            m = p.chooseMove(moves, gameBoard, p.myColor(), false);
+            m     = p.chooseMove(moves, gameBoard, p.myColor(), false);
         }
 
         String loser;
@@ -66,7 +67,6 @@ public class GameController{
         gameWon = checkForWin(m, loser, winner);
 
         gameBoard.update(m, p.myColor());
-        gameBoard.printGameBoard();
     }
 
     public void runGame(){
@@ -74,22 +74,32 @@ public class GameController{
         ArrayList<Move> moves;
         Move m;
 
-        gameBoard.printGameBoard();
-
         //BLACK FIRST MOVE
-        System.out.println("round 1: Black");
+        System.out.println("-----------------------");
+        System.out.println("Round 1: Black's move");
+        System.out.println("-----------------------");
+        gameBoard.printGameBoard();
         firstTurn(black);
 
         //WHITE FIRST MOVE
-        System.out.println("round 1: White");
+        System.out.println("-----------------------");
+        System.out.println("Round 1: White's move");
+        System.out.println("-----------------------");
+        gameBoard.printGameBoard();
         firstTurn(white);
 
         //BEGIN REST OF GAME
         while(!gameWon){
-            System.out.println("round " + round + ": Black");
+            System.out.println("-----------------------");
+            System.out.println("Round " + round + ": Black's move");
+            System.out.println("-----------------------");
+            gameBoard.printGameBoard();
             turn(black);
 
-            System.out.println("round " + round + ": White");
+            System.out.println("-----------------------");
+            System.out.println("Round " + round + ": White's move");
+            System.out.println("-----------------------");
+            gameBoard.printGameBoard();
             turn(white);
 
             round++;
@@ -98,12 +108,11 @@ public class GameController{
 
     public int selectMove(ArrayList<Move> alm, char myColor){
         if(alm.size() == 0){
-            System.out.println("No moves");
+            System.out.println("No moves!");
             return 0;
-        }   
-        System.out.println(myColor + "'s moves:");
+        }
         for(int i = 0; i < alm.size(); i++){
-            System.out.println(alm.get(i));
+            System.out.println(i+1 +". " + alm.get(i));
         }
         scan = new Scanner(System.in);
         System.out.println("Enter the number of the move you choose.");
@@ -121,18 +130,38 @@ public class GameController{
         return false;
     }
 
-    //     public String questionResponse(String message, String ans,){
-    //     }
+    public void initializeGameSettings(){
+       System.out.println("\n\nWELCOME TO KONANE\n");
+       boolean validInput = false;
 
-    public void chooseDifficulty(){
-        String ans = "";
-        boolean validInput = false;
+       scan = new Scanner(System.in);
 
-        scan = new Scanner(System.in);
+       while(!validInput){
+          System.out.println("Choose the game tree search depth. \nType a number between 1 and 6, or type O for random depth.");
 
-        //while(!validInput){
-           // System.out.println();
-        //}
+          searchDepth = scan.nextInt();
+
+          if(searchDepth >= 0 && searchDepth <= 6)
+            validInput = true;
+
+          if(!validInput)
+            System.out.println("Invalid input, try again. Game tree depth must be between 1 and 6, or 0 for random depth.");
+       }
+
+       validInput = false;
+
+       while(!validInput){
+          System.out.println("Choose the speed of your opponent. \nType 1 for slow (minimax) and 2 for fast (alpha beta pruning)");
+          speed = scan.nextInt();
+
+          if(speed == 1 || speed == 2)
+            validInput = true;
+
+          if(!validInput)
+            System.out.println("Invalid input, try again.");
+       }
+
+       chooseYourColor();
     }
 
     public void chooseYourColor(){
@@ -159,12 +188,13 @@ public class GameController{
         if(ans.equals("b")){
             black = new Human('b', false);
             white = new Agent('w', true);
+            white.addStrategySettings(speed, searchDepth);
         }
         else if(ans.equals("w")){
             System.out.println("HERE");
             white = new Human('w', false);
             black = new Agent('b', true);
-            System.out.println(black.isCPU());
+            black.addStrategySettings(speed, searchDepth);
         }
     }
 

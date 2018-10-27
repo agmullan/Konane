@@ -11,12 +11,21 @@ import java.math.*;
 
 public class Strategy{
 
-    int maxDepth;
+    int           maxDepth;
     MoveGenerator mG;
+    int           speed;
 
-    public Strategy(MoveGenerator mG, int maxDepth){
+    public Strategy(MoveGenerator mG, int maxDepth, int speed){
         this.mG = mG;
         this.maxDepth = maxDepth;
+        this.speed = speed;
+    }
+
+    public Move strategyGo(GameBoard gb, char myColor, ArrayList<Move> c, boolean firstW){
+        if(speed == 1) //SLOW - MINIMAX ONLY
+          return minimax();
+        else //FAST -- ALPA BETA PRUNING
+          return alpha_beta_search( gb, myColor, c, firstW);
     }
 
     public Move alpha_beta_search(GameBoard gb, char myColor, ArrayList<Move> c, boolean firstW){ //Move currentMove
@@ -33,10 +42,10 @@ public class Strategy{
     public Move min(char[][] gb, Move m, int alpha, int beta, int currentDepth, char myColor){ //"returns a utility value" in this case it will return the whole move which contains a utlity value
         m.setV(Integer.MAX_VALUE); //v = Integer.MAX_VALUE;
          ArrayList<Move> availableMoves = mG.getMoves(gb, myColor);
-         
+
         if(terminal_test(m, gb, currentDepth, myColor, availableMoves))
             return m;
-       
+
         for(int i = 0; i<availableMoves.size(); i++){//for each move in the set of available moves
             char[][] tempBoard = mG.tempBoard(gb, availableMoves.get(i).currentLocation(), availableMoves.get(i).futureLocation(),myColor);
             m.setV(fourMin(m.getV(), max(tempBoard, availableMoves.get(i), alpha, beta, currentDepth+1, myColor, null).getV(), alpha, beta));
@@ -51,10 +60,10 @@ public class Strategy{
     public Move max(char[][] gb, Move m, int alpha, int beta, int currentDepth, char myColor, ArrayList<Move> c){
         m.setV(Integer.MIN_VALUE);
         ArrayList<Move> availableMoves = mG.getMoves(gb, myColor);
-        
+
         if(terminal_test(m, gb, currentDepth, myColor, availableMoves))
             return m;
-        
+
         for(int i = 0; i<availableMoves.size(); i++){//for each move in the set of available moves
             char[][] tempBoard = mG.tempBoard(gb, availableMoves.get(i).currentLocation(), availableMoves.get(i).futureLocation(), myColor);
             m.setV(fourMax(m.getV(), min(tempBoard, availableMoves.get(i), alpha, beta, currentDepth+1, myColor).getV(), alpha, beta));
@@ -67,7 +76,7 @@ public class Strategy{
     }
 
     public boolean terminal_test(Move m, char[][] gb, int currentDepth, char myColor, ArrayList<Move> moves){
-        if(moves.size() == 0) 
+        if(moves.size() == 0)
            return true;
         if(currentDepth == maxDepth){
             m.calculateUtility(gb, mG, myColor);
@@ -89,5 +98,8 @@ public class Strategy{
         int t3 = Math.max(t2,d);
         return t3;
     }
-}
 
+    public Move minimax(){
+      return new Move();
+    }
+}

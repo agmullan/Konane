@@ -50,4 +50,8 @@ public class Player{
         Move g = new Move();
         return g;
     }
+
+    public void addStrategySettings(int sp, int mD){
+  
+    }
 }//end of Agent class

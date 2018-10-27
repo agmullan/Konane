@@ -10,15 +10,23 @@ import java.util.*;
 public class Agent extends Player{
 
     private MoveGenerator moveGenerator;
-    private Strategy strategy;
-    private char myColor;
-    private boolean isCPU;
+    private Strategy      strategy;
+    private char          myColor;
+    private boolean       isCPU;
+    private int           maxDepth;
+    private int           speed;
+
 
     public Agent(char myColor, boolean isCPU){
-        this.myColor = myColor;
-        this.isCPU = isCPU;
+        this.myColor  = myColor;
+        this.isCPU    = isCPU;
         moveGenerator = new MoveGenerator();
-        strategy = new Strategy(moveGenerator, 6); //max depth hard coded
+        strategy      = new Strategy(moveGenerator, maxDepth, speed);
+    }
+
+    public void addStrategySettings(int sp, int mD){
+      speed    = sp;
+      maxDepth = mD;
     }
 
     public boolean isCPU(){
@@ -31,7 +39,7 @@ public class Agent extends Player{
 
     public ArrayList<Move> takeFirstTurn(GameBoard currentBoardState){
         ArrayList<Move> availableMoves = moveGenerator.first_turn(myColor,currentBoardState);
-        return availableMoves; 
+        return availableMoves;
     }
 
     public ArrayList<Move> takeTurn(GameBoard currentBoardState){
@@ -41,10 +49,31 @@ public class Agent extends Player{
 
     public Move chooseMove(ArrayList<Move> availableMoves, GameBoard currentBoardState, char myColor, boolean firstW){
         if(availableMoves.size() > 0){
-            return strategy.alpha_beta_search(currentBoardState, myColor, availableMoves, firstW);
+            Move m = strategy.strategyGo(currentBoardState, myColor, availableMoves, firstW);
+            printMove(m);
+            return m;
         }else{
             Move m = new Move(true);
             return m;
         }
+      }
+    public void printMove(Move m){
+      String myName = "";
+      String message = "";
+      String opponent = "";
+
+      if(myColor == 'b'){
+        myName = "Black";
+        opponent = "w";
+      }
+
+      if(myColor == 'w'){
+        myName = "White";
+        opponent = "b";
+      }
+
+      message = myName + " moves " + opponent + " from " + m.cLX() + " " + m.cLY() + " to " + m.fLX() + " " + m.fLY();
+      message+=", removing " + m.removeList().toString();
+      System.out.println(message);
     }
 }//end of Agent class

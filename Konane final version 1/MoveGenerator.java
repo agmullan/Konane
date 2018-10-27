@@ -226,7 +226,7 @@ public class MoveGenerator{
         ArrayList<Move> alm = new ArrayList<Move>();
         ArrayList<Node> leaves = new ArrayList<Node>();
 
-        System.out.println("there are " + t.size() + " trees");
+        //System.out.println("there are " + t.size() + " trees");
         //for each Tree
         for(int x = 0; x < t.size(); x++){
             //create a set of leaf nodes
@@ -298,26 +298,26 @@ public class MoveGenerator{
             Move fullMove = alm.get(i);
             int noSteps = fullMove.removeList().size();
             if(noSteps > 1){
-            
+
                 int startX = fullMove.fLX();
                 int startY = fullMove.fLY();
                 int endX = fullMove.removeList().get(noSteps-1).x();
                 int endY = fullMove.removeList().get(noSteps-1).y();
                 expand(startX,startY,endX,endY,noSteps,fullMove, alm);
-            
+
             }
         }
         removeDuplicates(alm);
         return alm;
     }
-    
+
     public void removeDuplicates(ArrayList<Move> alm){
         for(int i = 0; i < alm.size()-1; i++){ //for each move in arraylist
             for(int j = i+1; j<alm.size(); j ++){
                 if(alm.get(i).compareTo(alm.get(j)) == 0){//if theyre equal
                     //System.out.println("Remove " + alm.get(j));
                     alm.remove(j);
-                    
+
                 }
             }
         }
@@ -375,11 +375,11 @@ public class MoveGenerator{
                 newState[i][j] = oldState[i][j];
             }
         }
-        
+
         newState[from.x()][from.y()] = 'e';
         newState[to.x()][to.y()] = myColor;
         newState[(to.x()+from.x())/2][(to.y()+from.y())/2] = 'e';
-      
+
         return newState;
     }
 
