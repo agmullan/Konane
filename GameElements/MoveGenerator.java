@@ -5,7 +5,7 @@
  * This class contains the methods to generate the legal moves on Kunane.
  *
  **/
-
+package GameElements;
 import java.util.*;
 
 public class MoveGenerator{
@@ -35,7 +35,7 @@ public class MoveGenerator{
         }
         if(c == 'w'){
 
-            if(currentBoardState.get_game_state(7,7) == 'e'){
+            if(currentBoardState.get_game_state(7,7) == '-'){
                 Move m1 = new Move();
                 m1.removeList().add(new Tuple(6,7));
                 Move m2 = new Move();
@@ -44,7 +44,7 @@ public class MoveGenerator{
                 legal_moves.add(m1);
                 legal_moves.add(m2);
             }
-            else if(currentBoardState.get_game_state(0,0) == 'e'){
+            else if(currentBoardState.get_game_state(0,0) == '-'){
                 Move m1 = new Move();
                 m1.removeList().add(new Tuple(0,1));
                 Move m2 = new Move();
@@ -53,7 +53,7 @@ public class MoveGenerator{
                 legal_moves.add(m1);
                 legal_moves.add(m2);
             }
-            else if(currentBoardState.get_game_state(4,4) == 'e'){
+            else if(currentBoardState.get_game_state(4,4) == '-'){
                 Move m1 = new Move();
                 m1.removeList().add(new Tuple(3,4));
                 Move m2 = new Move();
@@ -68,7 +68,7 @@ public class MoveGenerator{
                 legal_moves.add(m3);
                 legal_moves.add(m4);
             }
-            else if(currentBoardState.get_game_state(3,3) == 'e'){
+            else if(currentBoardState.get_game_state(3,3) == '-'){
                 Move m1 = new Move();
                 m1.removeList().add(new Tuple(2,3));
                 Move m2 = new Move();
@@ -175,7 +175,7 @@ public class MoveGenerator{
      * it returns false. If the tile is occupied it will return true.
      */
     public boolean check_isEmpty(Tuple t, GameBoard currentBoardState ){
-        if(currentBoardState.get_game_state(t.y(), t.x()) == 'e'){
+        if(currentBoardState.get_game_state(t.y(), t.x()) == '-'){
             return true;
         }
         else{
@@ -226,7 +226,7 @@ public class MoveGenerator{
         ArrayList<Move> alm = new ArrayList<Move>();
         ArrayList<Node> leaves = new ArrayList<Node>();
 
-        System.out.println("there are " + t.size() + " trees");
+        //System.out.println("there are " + t.size() + " trees");
         //for each Tree
         for(int x = 0; x < t.size(); x++){
             //create a set of leaf nodes
@@ -264,25 +264,29 @@ public class MoveGenerator{
         return expandMoves(alm);
     }
 
-    public void expand(int sX, int sY, int  eX,int  eY, int noJumps, Move fullMove, ArrayList<Move> alm){
-        int stepX = -1;
-        int stepY = -1;
+    public void expand(int lSX, int lSY, int lRX, int lRY, int noJumps, Move fullMove, ArrayList<Move> alm){
+        int newLastStepX = -1;
+        int newLastStepY = -1;
         //get the new end tuple
-        if(sX-eX < 0){
-            stepX = eX+1;
-            stepY = eY;
-        }else if(sX - eX > 0){
-            stepX = eX-1;
-            stepY = eY;
-        }else if(sY-eY < 0){
-            stepX = eX;
-            stepY = eY+1;
-        }else if(sY-eY>0){
-            stepX = eX;
-            stepY = eY-1;
+         if(lSX-lRX < 0){
+            newLastStepX = lRX+1;
+            newLastStepY = lRY;
         }
-        Move m = new Move(fullMove.cLX(),fullMove.cLY(),stepX,stepY);
-        for(int i = 0; i < noJumps-1; i++){
+        else if(lSX-lRX > 0){
+            newLastStepX = lRX-1;
+            newLastStepY = lRY;
+        }
+        else if(lSY-lRY < 0){
+            newLastStepX = lRX;
+            newLastStepY = lRY+1;
+        }
+        else if(lSY-lRY>0){
+            newLastStepX = lRX;
+            newLastStepY = lRY-1;
+        }
+        int size = fullMove.removeList().size();
+        Move m = new Move(fullMove.cLX(),fullMove.cLY(),newLastStepX,newLastStepY);
+        for(int i = (size-noJumps+1); i < size; i++){
             m.addRemoval(fullMove.removeList().get(i));
         }
         noJumps--;
@@ -290,7 +294,9 @@ public class MoveGenerator{
         if(noJumps == 1){
             return;
         }
-        expand(stepX,stepY,fullMove.removeList().get(noJumps-1).x(),fullMove.removeList().get(noJumps-1).y(),noJumps,fullMove,alm);
+        int newLastRemoveX = fullMove.removeList().get(size - noJumps).x();
+        int newLastRemoveY = fullMove.removeList().get(size - noJumps).y();
+        expand(newLastStepX,newLastStepY,newLastRemoveX,newLastRemoveY,noJumps,fullMove,alm);
     }
 
     public ArrayList<Move> expandMoves(ArrayList<Move> alm){
@@ -299,11 +305,11 @@ public class MoveGenerator{
             int noSteps = fullMove.removeList().size();
             if(noSteps > 1){
 
-                int startX = fullMove.fLX();
-                int startY = fullMove.fLY();
-                int endX = fullMove.removeList().get(noSteps-1).x();
-                int endY = fullMove.removeList().get(noSteps-1).y();
-                expand(startX,startY,endX,endY,noSteps,fullMove, alm);
+                int lastStepX = fullMove.fLX();
+                int lastStepY = fullMove.fLY();
+                int lastRemoveX = fullMove.removeList().get(0).x();
+                int lastRemoveY = fullMove.removeList().get(0).y();
+                expand(lastStepX,lastStepY,lastRemoveX,lastRemoveY,noSteps,fullMove, alm);
 
             }
         }
@@ -361,14 +367,14 @@ public class MoveGenerator{
             Node n = new Node(jumps.get(i), parent);
 
             t.addNode(n);
-            char[][] newState = tempBoard(state, jumps.get(i), parent.t(), myColor);
+            char[][] newState = tempBoard(state, jumps.get(i), parent.t(), myColor, null);
 
             buildMoveTree(t, newState, n, myColor);
 
         }
     }
 
-    public char[][] tempBoard(char[][] oldState, Tuple to, Tuple from, char myColor){
+    public char[][] tempBoard(char[][] oldState, Tuple to, Tuple from, char myColor, Tuple firstRemove){
         char[][] newState = new char[8][8];
         for(int i = 0; i < 8; i++){
             for(int j = 0; j < 8; j++){
@@ -376,9 +382,16 @@ public class MoveGenerator{
             }
         }
 
-        newState[from.x()][from.y()] = 'e';
-        newState[to.x()][to.y()] = myColor;
-        newState[(to.x()+from.x())/2][(to.y()+from.y())/2] = 'e';
+        if(to.x() == -1){
+            newState[firstRemove.x()][firstRemove.y()] = '-';
+        }else{
+            if(from.x()== 8 || from.y() == 8){
+                System.out.println("");
+            }
+            newState[from.x()][from.y()] = '-';
+            newState[to.x()][to.y()] = myColor;
+            newState[(to.x()+from.x())/2][(to.y()+from.y())/2] = '-';
+        }
 
         return newState;
     }
@@ -391,16 +404,16 @@ public class MoveGenerator{
 
         ArrayList<Tuple> jumps = new ArrayList<Tuple>();
 
-        if(x+2 < 8 && state[x+2][y] == 'e' && state[x+1][y] != 'e' && ((x+2) != px && y != py)){
+        if(x+2 < 8 && state[x+2][y] == '-' && state[x+1][y] != '-' && ((x+2) != px && y != py)){
             jumps.add(new Tuple(x+2,y));
         }
-        if(x-2 >= 0 && state[x-2][y] == 'e' && state[x-1][y] != 'e' && ((x-2) != px && y != py)){
+        if(x-2 >= 0 && state[x-2][y] == '-' && state[x-1][y] != '-' && ((x-2) != px && y != py)){
             jumps.add(new Tuple(x-2,y));
         }
-        if(y+2 < 8 && state[x][y+2] == 'e' && state[x][y+1] != 'e' && (x != px && (y+2) != py)){
+        if(y+2 < 8 && state[x][y+2] == '-' && state[x][y+1] != '-' && (x != px && (y+2) != py)){
             jumps.add(new Tuple(x,y+2));
         }
-        if(y-2 >= 0 && state[x][y-2] == 'e' && state[x][y-1] != 'e' && (x != px && (y-2) != py)){
+        if(y-2 >= 0 && state[x][y-2] == '-' && state[x][y-1] != '-' && (x != px && (y-2) != py)){
             jumps.add(new Tuple(x,y-2));
         }
 
@@ -423,16 +436,16 @@ public class MoveGenerator{
     }
 
     public boolean moveable(int x, int y, char[][] state){
-        if(x+2 < 8 && state[x+2][y] == 'e' && state[x+1][y] != 'e'){
+        if(x+2 < 8 && state[x+2][y] == '-' && state[x+1][y] != '-'){
             return true;
         }
-        if(x-2 >= 0 && state[x-2][y] == 'e' && state[x-1][y] != 'e'){
+        if(x-2 >= 0 && state[x-2][y] == '-' && state[x-1][y] != '-'){
             return true;
         }
-        if(y+2 < 8 && state[x][y+2] == 'e' && state[x][y+1] != 'e'){
+        if(y+2 < 8 && state[x][y+2] == '-' && state[x][y+1] != '-'){
             return true;
         }
-        if(y-2 >= 0 && state[x][y-2] == 'e' && state[x][y-1] != 'e'){
+        if(y-2 >= 0 && state[x][y-2] == '-' && state[x][y-1] != '-'){
             return true;
         }
         return false;

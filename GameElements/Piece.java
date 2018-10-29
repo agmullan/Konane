@@ -22,12 +22,12 @@ private double orig_X, orig_Y;
       mouseX = e.getSceneX();
       mouseY = e.getSceneY();
       setStroke(Color.GOLD);
-
+      System.out.println(x * UI.TILE_SIZE + " " + y * UI.TILE_SIZE);
     });
 
-    setOnMouseDragged(e ->{
-      relocate(e.getSceneX() - mouseX + orig_X, e.getSceneY() - mouseY + orig_Y);
-    });
+    // setOnMouseDragged(e ->{
+    //   relocate(e.getSceneX() - mouseX + orig_X, e.getSceneY() - mouseY + orig_Y);
+    // });
 
 
   }//end constructor

@@ -2,22 +2,21 @@
   * @author: Francine Dennehy
   * @author: Alexandra Mullan
   * @version: 1.0
-  * This class contains the tests main
+  * This class contains the main function that will start the entire game of
+  * Konane.
   *
  **/
+package GameElements;
+import java.util.*;
 
- package Tests;
- import java.util.*;
- import GameElements.*;
-
-public class Test_Driver{
+public class game_driver{
 
 /**
   * this is the main method
  **/
 public static void main(String[] args){
-  // GameBoard game = new GameBoard();
-  // game.printGameBoard();
+
+ GameController gB = new GameController();
 
 }//end of main
 

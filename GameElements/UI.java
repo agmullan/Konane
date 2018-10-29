@@ -72,13 +72,25 @@ pane.setPadding(new Insets(10, 10, 10, 10));
    ply_one.setToggleGroup(ply_turn);
    ply_two.setToggleGroup(ply_turn);
 
+/* Set up tools to select color of player */
+   Label color = new Label("Chose your color");
+   //set up Radio Buttons
+     RadioButton white_color = new RadioButton("White");
+     RadioButton black_color = new RadioButton("Black");
+
+     // //set up ToggleGroup
+     // ToggleGroup colorSelection = new ToggleGroup();
+     // colorSelection.setToggleGroup(white_color);
+     // colorSelection.setToggleGroup(black_color);
+
+
 
 //numbers for Scene size
 final double NUM_WIDTH = 1000; //2500
 final double NUM_HEIGHT = 1000; //1000
 
 //set up panes
-Tpane.getChildren().addAll(title, ply_one, ply_two);
+Tpane.getChildren().addAll(title, color, white_color, black_color ,ply_one, ply_two);
 Tpane.setAlignment(Pos.CENTER);
 //Tpane.setStyle("-fx-border-color: blue");
 pane.setStyle("-fx-background-color: teal");

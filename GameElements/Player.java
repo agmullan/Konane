@@ -1,12 +1,11 @@
 /**
-/**
  * @author: Francine Dennehy
  * @author: Alexandra Mullan
  * @version: 1.0
  * This class contains the methods to set up the artifical interegents.
  *
  **/
-
+package GameElements;
 import java.util.*;
 
 public class Player{
@@ -50,5 +49,12 @@ public class Player{
     public Move chooseMove(ArrayList<Move> availableMoves, GameBoard currentBoardState, char myColor, boolean firstW){
         Move g = new Move();
         return g;
+    }
+
+    public void addStrategySettings(int sp, int mD){
+
+    }
+
+    public void printMove(Move m){
     }
 }//end of Agent class

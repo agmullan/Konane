@@ -5,17 +5,17 @@
  * This class contains the methods to set up the Human Agent. This class is similar to
  * that of Agent expect the inputs from this class should be provided for by the human player.
  **/
-
+package GameElements;
 import java.io.*;
 import java.util.Scanner;
 import java.util.*;
 
 public class Human extends Player{
   //Declarations
-    private char myColor;
-    private MoveGenerator moveGenerator;
-    private boolean isCPU;
-    private Strategy strategy;
+  private char myColor;
+  private MoveGenerator moveGenerator;
+  private boolean isCPU;
+  private Strategy strategy;
 
 /**
   * @version 1.5
@@ -26,7 +26,6 @@ public class Human extends Player{
      this.myColor = myColor;
      this.isCPU = isCPU;
      moveGenerator = new MoveGenerator();
-     strategy = new Strategy(moveGenerator, 6); //hard coded in
   }// end of  Human(char myColor, boolean isCPU)
 
 /**
@@ -72,23 +71,6 @@ public class Human extends Player{
      ArrayList<Move> availableMoves = moveGenerator.getMoves(currentBoardState.gameState(), myColor);
      return availableMoves;
   }//end of takeTurn(GameBoard currentBoardState)
-
-/**
-  * @version 1.0
-  * @return Move m
-  * This method is used to select a move from the generated list of moves available to the
-  * agent. The method first checks to see if the availableMoves ArrayList is less
-  * then zero. In this case it just returns the first move generated. If the ArrayList
-  * is not empty then a new move is created and returned.
- **/
- public Move chooseMove(ArrayList<Move> availableMoves, GameBoard currentBoardState, boolean firstW){
-     if(availableMoves.size() > 0){
-         return strategy.alpha_beta_search(currentBoardState, myColor, null, firstW);
-     }else{
-         Move m = new Move(true);
-         return m;
-     }
-  }//end of chooseMove(ArrayList<Move> availableMoves)
 
 /**
   * @version 1.0
