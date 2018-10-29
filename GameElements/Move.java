@@ -38,6 +38,7 @@ public class Move implements Comparable<Move>{
         removeList = new ArrayList<Tuple>();
     }
 
+
     public boolean noMove(){
         return noMove;
     }
@@ -45,6 +46,7 @@ public class Move implements Comparable<Move>{
     public int numRemoves(){
         return removeList.size();
     }
+
 
     public int cLX(){
         return currentLocation.x();
