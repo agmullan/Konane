@@ -2,7 +2,7 @@
   * @author: Francine Dennehy
   * @author: Alexandra Mullan
   * @version: 1.0
-  * This class contains the tests main
+  * This class contains the main of the tests folder
   *
  **/
 
@@ -13,6 +13,8 @@
 public class Test_Driver{
 
 /**
+  * @version 1.0
+  * @return void
   * this is the main method
  **/
 public static void main(String[] args){
@@ -20,7 +22,10 @@ public static void main(String[] args){
   Test_Tuple test_one = new Test_Tuple();
   System.out.println("GameBoard Class");
   Test_GameBoard test_two = new Test_GameBoard();
-
+  System.out.println("Move Class");
+  Test_Move test_three = new Test_Move();
+  System.out.println("MoveGenerator Class");
+  Test_MoveGenerator test_four = new Test_MoveGenerator();
 
 }//end of main
 

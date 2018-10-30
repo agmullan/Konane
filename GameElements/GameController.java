@@ -97,40 +97,41 @@ private int            speed       = -1;
   * false but updates to true when there is a winner.
  **/
  public void runGame(){
-   ArrayList<Move> moves;
-   Move m;
 
-   //BLACK FIRST MOVE
-   System.out.println("-----------------------");
-   System.out.println("Round 1: Black's move");
-   System.out.println("-----------------------");
-   gameBoard.printGameBoard();
-   firstTurn(black);
+     ArrayList<Move> moves;
+     Move m;
 
-   //WHITE FIRST MOVE
-   System.out.println("-----------------------");
-   System.out.println("Round 1: White's move");
-   System.out.println("-----------------------");
-   gameBoard.printGameBoard();
-   firstTurn(white);
+     //BLACK FIRST MOVE
+     System.out.println("-----------------------");
+     System.out.println("Round 1: Black's move");
+     System.out.println("-----------------------");
+     gameBoard.printGameBoard();
+     firstTurn(black);
 
-   //BEGIN REST OF GAME
-   while(!gameWon){
-       System.out.println("-----------------------");
-       System.out.println("Round " + round + ": Black's move");
-       System.out.println("-----------------------");
-       gameBoard.printGameBoard();
-       turn(black);
+     //WHITE FIRST MOVE
+     System.out.println("-----------------------");
+     System.out.println("Round 1: White's move");
+     System.out.println("-----------------------");
+     gameBoard.printGameBoard();
+     firstTurn(white);
 
-       System.out.println("-----------------------");
-       System.out.println("Round " + round + ": White's move");
-       System.out.println("-----------------------");
-       gameBoard.printGameBoard();
-       turn(white);
+     //BEGIN REST OF GAME
+     while(!gameWon){
+         System.out.println("-----------------------");
+         System.out.println("Round " + round + ": Black's move");
+         System.out.println("-----------------------");
+         gameBoard.printGameBoard();
+         turn(black);
 
-       round++;
-   }
-  }//end of runGame()
+         System.out.println("-----------------------");
+         System.out.println("Round " + round + ": White's move");
+         System.out.println("-----------------------");
+         gameBoard.printGameBoard();
+         turn(white);
+
+         round++;
+     }
+ }//end of runGame()
 
 /**
   * @version 1.0
