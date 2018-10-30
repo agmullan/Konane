@@ -48,7 +48,7 @@ public class MoveGenerator{
                 Move m1 = new Move();
                 m1.removeList().add(new Tuple(0,1));
                 Move m2 = new Move();
-                m2.removeList().add(new Tuple(1,1));
+                m2.removeList().add(new Tuple(1,0));
 
                 legal_moves.add(m1);
                 legal_moves.add(m2);
